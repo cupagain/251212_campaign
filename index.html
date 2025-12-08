@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Xmas Campaign 2025</title>
     
     <!-- Tailwind CSS -->
@@ -12,24 +12,29 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Roboto:wght@500;700;900&display=swap" rel="stylesheet">
 
-    <!-- Custom Config for Tailwind -->
+    <!-- Custom Config -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
+                        swag: {
+                            teal: '#00d2be', // SWAG Teal
+                            dark: '#0a0a0a',
+                            panel: '#1e1e1e',
+                        },
                         xmas: {
-                            dark: '#0f172a',
-                            gold: '#fbbf24',
-                            red: '#ef4444',
-                            green: '#10b981',
-                            glass: 'rgba(255, 255, 255, 0.1)',
+                            gold: '#F2C94C',
+                            red: '#D42426'
                         }
                     },
                     fontFamily: {
-                        sans: ['Roboto', 'Noto Sans TC', 'sans-serif'],
+                        sans: ['Roboto', '"Noto Sans TC"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'glow': '0 0 20px rgba(0, 210, 190, 0.25)',
                     }
                 }
             }
@@ -38,180 +43,251 @@
 
     <style>
         body {
-            background: linear-gradient(135deg, #050505 0%, #0f172a 100%);
+            background: radial-gradient(circle at 50% 0%, #1a2c2a 0%, #050505 80%);
             color: #ffffff;
             min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
         }
-        
-        /* 磨砂玻璃卡片效果 */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+
+        .glass-panel {
+            background: rgba(30, 30, 30, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
         }
 
-        /* 語言切換按鈕激活狀態 */
-        .lang-btn.active {
-            background-color: #fbbf24; /* gold */
-            color: #000;
-            font-weight: bold;
-        }
-
-        /* 簡單的雪花動畫背景 (可選) */
-        .snow-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
+        /* 裝飾圖片 */
+        .deco-wreath {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 110px;
             z-index: 0;
-            opacity: 0.5;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
         }
-        
+
+        .deco-santa {
+            position: absolute;
+            top: 20px;
+            left: -20px;
+            width: 100px;
+            z-index: 0;
+            transform: rotate(-10deg);
+        }
+
+        .deco-house {
+            /* 修改位置到標題右側，避免擋住底部表格 */
+            position: absolute;
+            top: -10px;
+            right: 0;
+            width: 70px;
+            z-index: 10;
+            opacity: 1;
+            transform: rotate(5deg);
+        }
+
+        .diamond-icon {
+            display: block;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
         [v-cloak] { display: none; }
     </style>
 </head>
 <body>
 
-<div id="app" v-cloak class="relative z-10 pb-12">
-    <!-- Snow Pattern -->
-    <div class="snow-bg"></div>
+<div id="app" v-cloak class="relative pb-10 overflow-x-hidden">
 
-    <!-- Language Switcher (Floating) -->
-    <div class="fixed top-4 right-4 z-50 flex gap-2">
+    <!-- 語言切換 -->
+    <div class="fixed top-4 right-4 z-50 flex gap-2 bg-black/60 backdrop-blur rounded-full p-1 border border-white/10">
         <button 
             v-for="lang in ['tw', 'cn', 'en', 'jp']" 
             :key="lang"
             @click="currentLang = lang"
-            class="lang-btn px-3 py-1 rounded-full text-xs border border-white/20 transition hover:bg-white/20 uppercase"
-            :class="{ 'active': currentLang === lang }">
-            {{ lang.toUpperCase() }}
+            class="px-3 py-1 rounded-full text-xs font-bold transition-colors uppercase tracking-wider"
+            :class="currentLang === lang ? 'bg-swag-teal text-black' : 'text-gray-400 hover:text-white'">
+            {{ lang }}
         </button>
     </div>
 
-    <!-- Main Container -->
-    <main class="max-w-md mx-auto px-4 pt-12">
+    <main class="max-w-md mx-auto px-4 pt-10 relative z-10">
         
-        <!-- Header / Hero -->
-        <header class="text-center mb-8 animate-fade-in-down">
-            <h1 class="text-4xl font-black bg-clip-text text-transparent bg-gradient-to-r from-xmas-gold via-red-400 to-xmas-gold mb-2 drop-shadow-lg">
-                {{ t.title }}
-            </h1>
-            <p class="text-blue-200 text-sm font-medium tracking-wide border border-blue-500/30 inline-block px-3 py-1 rounded-full bg-blue-900/20">
-                {{ t.duration }}
-            </p>
+        <!-- SECTION 1: HERO & EVENT INFO -->
+        <header class="text-center mb-6 relative">
+            <img src="https://public.swag.live/products/livestream-wreath.png" class="deco-wreath" alt="Wreath">
+            <img src="https://public.swag.live/products/livestream-coming.png" class="deco-santa" alt="Santa">
+
+            <div class="relative z-10 pt-4">
+                <p class="text-swag-teal text-xs font-bold tracking-widest uppercase mb-2 border border-swag-teal/30 inline-block px-3 py-1 rounded-full bg-swag-teal/10">
+                    {{ t.duration }}
+                </p>
+                
+                <h1 class="text-4xl font-black text-white mb-2 drop-shadow-lg tracking-tight">
+                    {{ t.title }}
+                </h1>
+
+                <!-- 新增：指定禮物提示 -->
+                <p class="text-xmas-gold font-bold text-sm mb-6 bg-black/40 inline-block px-4 py-1.5 rounded-lg border border-xmas-gold/30">
+                    🎁 {{ t.giftRequirement }}
+                </p>
+
+                <!-- 活動獎勵總覽卡片 -->
+                <div class="glass-panel rounded-2xl overflow-hidden text-left relative z-10">
+                    
+                    <!-- 上半部：抽獎 -->
+                    <div class="p-5 border-b border-white/10 bg-gradient-to-r from-swag-teal/10 to-transparent">
+                        <div class="flex items-center justify-between mb-2">
+                            <h2 class="text-lg font-bold text-white">{{ t.drawTitle }}</h2>
+                            <!-- 本地化標籤 -->
+                            <span class="text-xs bg-xmas-red text-white px-2 py-0.5 rounded font-bold tracking-wide">
+                                {{ t.badgeDraw }}
+                            </span>
+                        </div>
+                        <p class="text-gray-300 text-sm mb-3">{{ t.drawDesc }}</p>
+                        
+                        <!-- 鑽石顯示區塊 (修正對齊與大小) -->
+                        <div class="flex items-center gap-4 bg-black/30 p-3 rounded-lg border border-white/5">
+                            <img src="https://public.swag.live/notifications/custom/EL/1212_campaign.png" class="diamond-icon w-12 h-12 shrink-0" alt="Diamond">
+                            <div class="flex flex-col justify-center">
+                                <p class="text-3xl font-black text-swag-teal leading-none mb-1">10,000</p>
+                                <p class="text-[10px] text-gray-400 uppercase tracking-wider leading-none">{{ t.diamondsEach }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 下半部：排行 -->
+                    <div class="p-5 bg-gradient-to-r from-xmas-gold/10 to-transparent">
+                        <div class="flex items-center justify-between mb-2">
+                            <h2 class="text-lg font-bold text-white">{{ t.rankTitle }}</h2>
+                            <!-- 本地化標籤 -->
+                            <span class="text-xs bg-xmas-gold text-black px-2 py-0.5 rounded font-bold tracking-wide">
+                                {{ t.badgeRank }}
+                            </span>
+                        </div>
+                        <p class="text-gray-300 text-sm mb-3">{{ t.rankDesc }}</p>
+                        
+                        <!-- 鑽石顯示區塊 (修正對齊與大小) -->
+                        <div class="flex items-center gap-4 bg-black/30 p-3 rounded-lg border border-white/5">
+                            <img src="https://public.swag.live/notifications/custom/EL/1212_campaign.png" class="diamond-icon w-12 h-12 shrink-0" alt="Diamond">
+                            <div class="flex flex-col justify-center">
+                                <p class="text-3xl font-black text-xmas-gold leading-none mb-1">100,000</p>
+                                <p class="text-[10px] text-gray-400 uppercase tracking-wider leading-none">{{ t.maxPrize }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA Button -->
+                <a :href="giftUrl" target="_blank" 
+                   class="block mt-4 w-full py-4 rounded-xl bg-gradient-to-r from-swag-teal to-teal-600 text-black font-black text-xl shadow-glow hover:brightness-110 transition active:scale-[0.98]">
+                    {{ t.ctaButton }}
+                </a>
+            </div>
         </header>
 
-        <!-- User Status Dashboard (Dynamic Data) -->
-        <section class="mb-8">
-            <div class="glass-card rounded-2xl p-6 relative overflow-hidden">
-                <!-- Decorative Glow -->
-                <div class="absolute top-0 right-0 w-32 h-32 bg-xmas-gold opacity-10 blur-3xl rounded-full pointer-events-none"></div>
-
-                <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
-                    <span class="text-xmas-gold">◈</span> {{ t.myStatus }}
-                </h2>
-
-                <!-- Loading State -->
-                <div v-if="loading" class="flex flex-col items-center justify-center py-8 text-gray-400">
-                    <svg class="animate-spin h-8 w-8 text-xmas-gold mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    <span class="text-xs">{{ t.loading }}</span>
+        <!-- SECTION 2: DASHBOARD -->
+        <section class="mb-8 relative z-20">
+            <div class="glass-panel rounded-2xl p-6">
+                
+                <div v-if="loading" class="py-8 text-center text-gray-400">
+                    {{ t.loading }}
                 </div>
-
-                <!-- Error State -->
-                <div v-else-if="error" class="text-center py-4">
-                    <p class="text-xmas-red font-bold mb-1">{{ t.errorTitle }}</p>
-                    <p class="text-xs text-gray-400">{{ error }}</p>
-                    <p v-if="!userId" class="text-xs text-gray-500 mt-2">{{ t.loginRequired }}</p>
+                <div v-else-if="error" class="py-6 text-center text-xmas-red font-bold">
+                    {{ error }}
                 </div>
+                
+                <div v-else>
+                    <!-- 1. 抽獎資格 -->
+                    <div class="mb-6 text-center p-4 rounded-xl border-2 transition-colors"
+                         :class="userData.is_eligible 
+                            ? 'bg-swag-teal/10 border-swag-teal' 
+                            : 'bg-gray-800/40 border-gray-600'">
+                        <p class="text-sm font-bold text-gray-400 mb-1 uppercase tracking-widest">{{ t.lotteryStatus }}</p>
+                        <div class="flex items-center justify-center gap-2">
+                            <span class="text-3xl font-black" 
+                                  :class="userData.is_eligible ? 'text-swag-teal' : 'text-gray-500'">
+                                {{ userData.is_eligible ? t.qualified : t.notQualified }}
+                            </span>
+                            <span v-if="userData.is_eligible" class="text-2xl">✅</span>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-2">{{ t.event1Desc }}</p>
+                    </div>
 
-                <!-- Data Display -->
-                <div v-else class="space-y-4">
-                    <!-- Rank & Diamond Grid -->
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-black/30 p-3 rounded-lg text-center border border-white/5">
-                            <p class="text-xs text-gray-400 mb-1">{{ t.myRank }}</p>
-                            <p class="text-2xl font-bold text-white">
+                    <!-- 2. 排名與數據 -->
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="bg-black/40 rounded-xl p-4 text-center border border-white/5">
+                            <p class="text-xs text-gray-500 font-bold mb-1">{{ t.myRank }}</p>
+                            <p class="text-3xl font-bold text-white font-sans">
                                 {{ userData.rank ? userData.rank : '-' }}
                             </p>
                         </div>
-                        <div class="bg-black/30 p-3 rounded-lg text-center border border-white/5">
-                            <p class="text-xs text-gray-400 mb-1">{{ t.myDiamonds }}</p>
-                            <p class="text-2xl font-bold text-blue-300 font-mono">
-                                {{ formatNumber(userData.diamond_cost) }}
-                            </p>
+                        <div class="bg-black/40 rounded-xl p-4 text-center border border-white/5">
+                            <p class="text-xs text-gray-500 font-bold mb-1">{{ t.myDiamonds }}</p>
+                            <div class="flex items-center justify-center gap-1">
+                                <img src="https://public.swag.live/notifications/custom/EL/1212_campaign.png" class="w-6 h-6" alt="Diamond">
+                                <p class="text-3xl font-bold text-swag-teal font-sans">
+                                    {{ formatNumber(userData.diamond_cost) }}
+                                </p>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Eligibility Badge -->
-                    <div class="flex items-center justify-between p-3 rounded-lg border"
-                         :class="userData.is_eligible ? 'bg-green-900/20 border-green-500/50' : 'bg-red-900/20 border-red-500/50'">
-                        <span class="text-sm font-medium">{{ t.lotteryStatus }}</span>
-                        <span class="px-2 py-1 rounded text-xs font-bold"
-                              :class="userData.is_eligible ? 'bg-green-500 text-black' : 'bg-red-500 text-white'">
-                            {{ userData.is_eligible ? t.qualified : t.notQualified }}
-                        </span>
+                    <!-- 3. 總鑽榜獎勵表 -->
+                    <div class="relative pt-6 border-t border-white/10">
+                        <!-- 調整薑餅屋位置：放在標題列右側，不擋內容 -->
+                        <div class="flex items-center justify-between mb-4 relative">
+                            <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                                <span class="w-1 h-6 bg-xmas-gold rounded-full"></span>
+                                {{ t.event2Title }}
+                            </h3>
+                            <img src="https://public.swag.live/products/livestream-gingerbread-house.png" class="deco-house" alt="House">
+                        </div>
+
+                        <div class="overflow-hidden rounded-lg border border-white/10 bg-black/20 relative z-0">
+                            <table class="w-full text-sm">
+                                <thead class="bg-white/5 text-gray-400 text-xs uppercase">
+                                    <tr>
+                                        <th class="py-3 px-4 text-left font-medium">{{ t.rankCol }}</th>
+                                        <th class="py-3 px-4 text-right font-medium">{{ t.prizeCol }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-white/5">
+                                    <tr v-for="(prize, index) in rankingPrizes" :key="index" class="hover:bg-white/5 transition">
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center gap-3">
+                                                <span class="w-6 h-6 flex items-center justify-center rounded-full text-xs font-bold"
+                                                      :class="getRankBadgeClass(index)">
+                                                    {{ index + 1 }}
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td class="py-3 px-4 text-right">
+                                            <div class="flex items-center justify-end gap-2">
+                                                <span class="font-bold text-lg font-sans" :class="index < 3 ? 'text-xmas-gold' : 'text-gray-200'">
+                                                    {{ formatNumber(prize) }}
+                                                </span>
+                                                <img src="https://public.swag.live/notifications/custom/EL/1212_campaign.png" class="w-5 h-5" alt="Diamond">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Event 1: Lucky Draw -->
-        <section class="mb-6">
-            <div class="glass-card rounded-2xl p-6 border-l-4 border-l-xmas-red">
-                <h3 class="text-xl font-bold mb-2 text-white">{{ t.event1Title }}</h3>
-                <p class="text-sm text-gray-300 mb-4">{{ t.event1Desc }}</p>
-                
-                <div class="bg-gradient-to-r from-xmas-red to-pink-600 rounded-lg p-4 shadow-lg text-center transform transition hover:scale-105">
-                    <p class="text-xs text-white/80 mb-1 font-bold tracking-widest uppercase">{{ t.prize }}</p>
-                    <p class="text-3xl font-black text-white drop-shadow-md">10,000 <span class="text-lg font-normal">{{ t.diamonds }}</span></p>
-                    <p class="text-xs text-white/90 mt-1">x 50 {{ t.winners }}</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Event 2: Ranking -->
-        <section class="mb-8">
-            <div class="glass-card rounded-2xl p-6 border-l-4 border-l-xmas-gold">
-                <h3 class="text-xl font-bold mb-4 text-white">{{ t.event2Title }}</h3>
-                
-                <div class="overflow-hidden rounded-lg border border-white/10">
-                    <table class="w-full text-sm text-left">
-                        <tbody class="divide-y divide-white/10">
-                            <!-- Loop for Top 10 -->
-                            <tr v-for="(prize, index) in rankingPrizes" :key="index" class="hover:bg-white/5 transition">
-                                <td class="px-4 py-3 font-medium text-gray-300 w-24">
-                                    <span v-if="index < 3" class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-xmas-gold text-black font-bold text-xs">
-                                        {{ index + 1 }}
-                                    </span>
-                                    <span v-else class="pl-2">{{ t.rankPrefix }} {{ index + 1 }}</span>
-                                </td>
-                                <td class="px-4 py-3 text-right text-xmas-gold font-bold font-mono">
-                                    {{ formatNumber(prize) }} <span class="text-xs text-gray-500 font-normal">{{ t.diamonds }}</span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <!-- Rules -->
-        <section class="mb-12">
-            <div class="px-2">
-                <h4 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 border-b border-white/10 pb-2">
-                    {{ t.rulesTitle }}
-                </h4>
-                <ul class="text-xs text-gray-400 space-y-2 list-disc list-outside pl-4 leading-relaxed">
-                    <li v-for="(rule, idx) in t.rules" :key="idx">{{ rule }}</li>
-                </ul>
-            </div>
-        </section>
+        <!-- FOOTER: RULES -->
+        <footer class="mb-12 px-4 pb-4">
+            <h4 class="text-xs font-bold text-gray-500 uppercase mb-3 text-center tracking-widest border-b border-gray-800 pb-2">
+                {{ t.rulesTitle }}
+            </h4>
+            <ul class="space-y-2 text-xs text-gray-400 leading-relaxed list-disc list-outside pl-4">
+                <li v-for="(rule, idx) in t.rules" :key="idx">{{ rule }}</li>
+            </ul>
+        </footer>
 
     </main>
 </div>
@@ -219,133 +295,148 @@
 <script>
     const { createApp, ref, computed, onMounted } = Vue;
 
-    // --- Configuration ---
-    // 請在此處填入您的 Cloud Run API 網址 (Step 1 產生的)
-    const API_BASE_URL = "https://op-campaign-api-905468082258.asia-east1.run.app"; 
+    // CONFIGURATION
+    const API_BASE_URL = "https://op-campaign-api-905468082258.asia-east1.run.app"; // 請替換
+    const GIFT_URL = "https://swag.live/livestream"; // 請替換
 
-    // --- Translations ---
+    // 固定規則文案
+    const FIXED_RULES = [
+        "僅限送「聖誕快熱」系列禮物，包含直播間與聊天室。",
+        "排行榜鑽石相同者，以先達成者排名在前。",
+        "總鑽榜獎勵與抽獎獎勵將於活動結束後 3 個工作天內發放。",
+        "資料顯示可能有些微延遲，最終結果以官方計算為準。"
+    ];
+
     const TRANSLATIONS = {
         tw: {
             title: "聖誕狂歡送",
-            duration: "活動時間: 12/12 00:00 - 12/16 23:59 (GMT+8)",
-            myStatus: "我的活動數據",
-            loading: "正在讀取資料...",
-            errorTitle: "無法取得資料",
-            loginRequired: "請確認您已登入或從正確連結進入",
-            myRank: "目前排名",
-            myDiamonds: "累積鑽石",
+            duration: "12/12 - 12/16 (GMT+8)",
+            giftRequirement: "僅限送「聖誕快熱」系列禮物",
+            drawTitle: "送禮抽萬鑽",
+            badgeDraw: "抽獎活動",
+            drawDesc: "抽出 50 位幸運兒，每人獨得：",
+            diamondsEach: "每人獲得",
+            rankTitle: "總鑽榜獎勵",
+            badgeRank: "前十名獎勵",
+            rankDesc: "前十名加碼送，最高獲得：",
+            maxPrize: "冠軍獎勵",
+            ctaButton: "立即送禮",
+            
             lotteryStatus: "抽獎資格",
-            qualified: "已獲得",
-            notQualified: "未達標",
-            event1Title: "一：送禮抽萬鑽",
-            event1Desc: "送「聖誕快熱」禮物 (含直播間/聊天室)，不限鑽石數即獲資格！",
-            prize: "獨得獎勵",
-            diamonds: "鑽石",
-            winners: "位幸運兒",
-            event2Title: "二：總鑽榜排名",
-            rankPrefix: "第",
-            rulesTitle: "活動說明",
-            rules: [
-                "僅限送「聖誕快熱」系列禮物，包含直播間與聊天室。",
-                "排行榜鑽石相同者，以先達成者排名在前。",
-                "排名鑽石獎勵將於活動結束後 3 個工作天內派發。",
-                "抽獎鑽石將於活動結束後 3 個工作日內抽出並發放。",
-                "資料需登入帳號以正確顯示。",
-                "最終結果以官方計算為準。"
-            ]
+            qualified: "已獲得資格",
+            notQualified: "尚未達標",
+            event1Desc: "送出任一指定聖誕禮物即符合資格",
+            
+            myRank: "我的排名",
+            myDiamonds: "累積鑽石",
+            event2Title: "總鑽榜獎勵一覽",
+            rankCol: "排名",
+            prizeCol: "鑽石獎勵",
+            
+            loading: "讀取中...",
+            errorTitle: "無法取得資料",
+            rulesTitle: "活動注意事項",
+            rules: FIXED_RULES
         },
         cn: {
             title: "圣诞狂欢送",
-            duration: "活动时间: 12/12 00:00 - 12/16 23:59 (GMT+8)",
-            myStatus: "我的活动数据",
-            loading: "正在读取数据...",
-            errorTitle: "无法获取数据",
-            loginRequired: "请确认您已登录或从正确链接进入",
-            myRank: "目前排名",
-            myDiamonds: "累积钻石",
+            duration: "12/12 - 12/16 (GMT+8)",
+            giftRequirement: "仅限送「圣诞快热」系列礼物",
+            drawTitle: "送礼抽万钻",
+            badgeDraw: "抽奖活动",
+            drawDesc: "抽出 50 位幸运儿，每人独得：",
+            diamondsEach: "每人获得",
+            rankTitle: "总钻榜奖励",
+            badgeRank: "前十名奖励",
+            rankDesc: "前十名加码送，最高获得：",
+            maxPrize: "冠军奖励",
+            ctaButton: "立即送礼",
             lotteryStatus: "抽奖资格",
-            qualified: "已获得",
-            notQualified: "未达标",
-            event1Title: "一：送礼抽万钻",
-            event1Desc: "送「圣诞快热」礼物 (含直播间/聊天室)，不限钻石数即获资格！",
-            prize: "独得奖励",
-            diamonds: "钻石",
-            winners: "位幸运儿",
-            event2Title: "二：总钻榜排名",
-            rankPrefix: "第",
-            rulesTitle: "活动说明",
+            qualified: "已获得资格",
+            notQualified: "尚未达标",
+            event1Desc: "送出任一指定圣诞礼物即符合资格",
+            myRank: "我的排名",
+            myDiamonds: "累积钻石",
+            event2Title: "总钻榜奖励一览",
+            rankCol: "排名",
+            prizeCol: "钻石奖励",
+            loading: "读取中...",
+            errorTitle: "无法获取数据",
+            rulesTitle: "活动注意事项",
             rules: [
                 "仅限送「圣诞快热」系列礼物，包含直播间与聊天室。",
                 "排行榜钻石相同者，以先达成者排名在前。",
-                "排名钻石奖励将于活动结束后 3 个工作天内派发。",
-                "抽奖钻石将于活动结束后 3 个工作日内抽出并派发。",
-                "数据需登录账号以正确显示。",
-                "最终结果以官方计算为准。"
+                "总钻榜奖励与抽奖奖励将于活动结束后 3 个工作天内发放。",
+                "数据显示可能有些微延迟，最终结果以官方计算为准。"
             ]
         },
         en: {
             title: "Xmas Carnival",
-            duration: "Dec 12 00:00 - Dec 16 23:59 (GMT+8)",
-            myStatus: "My Status",
-            loading: "Loading data...",
-            errorTitle: "Data Unavailable",
-            loginRequired: "Please ensure you are logged in.",
-            myRank: "Rank",
-            myDiamonds: "Diamonds",
-            lotteryStatus: "Draw Entry",
+            duration: "Dec 12 - Dec 16 (GMT+8)",
+            giftRequirement: "Send 'happy-xmas' gifts only",
+            drawTitle: "Lucky Draw",
+            badgeDraw: "LUCKY DRAW",
+            drawDesc: "50 Winners will each receive:",
+            diamondsEach: "Per Winner",
+            rankTitle: "Ranking Rewards",
+            badgeRank: "TOP 10",
+            rankDesc: "Top 10 users will win up to:",
+            maxPrize: "Champion Prize",
+            ctaButton: "Send Gift Now",
+            lotteryStatus: "Eligibility",
             qualified: "Qualified",
             notQualified: "Not Eligible",
-            event1Title: "1. Gift to Win",
-            event1Desc: "Send any 'Xmas Heat' gift (Live/Chat) to qualify instantly!",
-            prize: "Grand Prize",
-            diamonds: "Diamonds",
-            winners: "Winners",
-            event2Title: "2. Top Ranking Rewards",
-            rankPrefix: "No.",
-            rulesTitle: "Event Rules",
+            event1Desc: "Send any 'happy-xmas' gift to qualify",
+            myRank: "Rank",
+            myDiamonds: "Diamonds",
+            event2Title: "Ranking Prize List",
+            rankCol: "Rank",
+            prizeCol: "Prize",
+            loading: "Loading...",
+            errorTitle: "Error",
+            rulesTitle: "Rules",
             rules: [
-                "Only 'Xmas Heat' gifts count (Live & Chat included).",
-                "In case of a tie, the first to achieve the score ranks higher.",
-                "Ranking rewards sent within 3 working days after event.",
-                "Lucky draw rewards sent within 3 working days after event.",
-                "Login required to view data.",
-                "Official calculation is final."
+                "Only 'happy-xmas' gifts are eligible (Live & Chat).",
+                "Tie-breaker: First to achieve the score ranks higher.",
+                "Ranking and Lucky Draw rewards will be sent within 3 working days after the event.",
+                "Data display may have slight delays; official calculation is final."
             ]
         },
         jp: {
-            title: "クリスマスカーニバル",
-            duration: "期間: 12/12 00:00 - 12/16 23:59 (GMT+8)",
-            myStatus: "ステータス",
-            loading: "読み込み中...",
-            errorTitle: "データ取得不可",
-            loginRequired: "ログインしているか確認してください。",
-            myRank: "順位",
-            myDiamonds: "ダイヤ数",
+            title: "クリスマス祭",
+            duration: "12/12 - 12/16 (GMT+8)",
+            giftRequirement: "「メリークリスマス」ギフト限定",
+            drawTitle: "抽選プレゼント",
+            badgeDraw: "抽選イベント",
+            drawDesc: "抽選で50名様にプレゼント：",
+            diamondsEach: "一人あたり",
+            rankTitle: "ランキング報酬",
+            badgeRank: "TOP 10",
+            rankDesc: "上位10名様には最大：",
+            maxPrize: "1位報酬",
+            ctaButton: "ギフトを送る",
             lotteryStatus: "抽選資格",
             qualified: "獲得済み",
             notQualified: "未達成",
-            event1Title: "1. ギフトで抽選",
-            event1Desc: "「クリスマス・ヒート」ギフトを送るだけで抽選権獲得（ダイヤ数不問）！",
-            prize: "大賞",
-            diamonds: "ダイヤ",
-            winners: "名様",
-            event2Title: "2. ランキング報酬",
-            rankPrefix: "第",
+            event1Desc: "「メリークリスマス」ギフト送信で資格GET",
+            myRank: "順位",
+            myDiamonds: "ダイヤ数",
+            event2Title: "ランキング報酬一覧",
+            rankCol: "順位",
+            prizeCol: "報酬",
+            loading: "読み込み中...",
+            errorTitle: "エラー",
             rulesTitle: "注意事項",
             rules: [
-                "「クリスマス・ヒート」ギフトのみ対象（ライブ/チャット含む）。",
+                "「メリークリスマス」ギフトのみ対象（ライブ/チャット含む）。",
                 "同点の場合は、先に達成した方が上位となります。",
-                "ランキング報酬はイベント終了後3営業日以内に配布。",
-                "抽選報酬はイベント終了後3営業日以内に抽選・配布。",
-                "データを表示するにはログインが必要です。",
-                "最終結果は公式の集計に準じます。"
+                "ランキング報酬と抽選報酬はイベント終了後3営業日以内に配布されます。",
+                "データ表示に遅延がある場合があります。最終結果は公式集計に準じます。"
             ]
         }
     };
 
-    const RANKING_PRIZES = [
-        100000, 90000, 80000, 70000, 60000, 50000, 40000, 30000, 20000, 10000
-    ];
+    const RANKING_PRIZES = [100000, 90000, 80000, 70000, 60000, 50000, 40000, 30000, 20000, 10000];
 
     createApp({
         setup() {
@@ -354,79 +445,46 @@
             const loading = ref(true);
             const error = ref(null);
             const userId = ref(null);
+            const giftUrl = ref(GIFT_URL);
 
-            // Computed Translation helper
             const t = computed(() => TRANSLATIONS[currentLang.value]);
 
-            // Helper: Format numbers (e.g. 100,000)
-            const formatNumber = (num) => {
-                return num ? num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "0";
+            const formatNumber = (num) => num ? num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "0";
+
+            // 排名樣式輔助函式
+            const getRankBadgeClass = (index) => {
+                if (index === 0) return 'bg-yellow-400 text-black shadow-[0_0_10px_gold]';
+                if (index === 1) return 'bg-gray-300 text-black shadow-[0_0_10px_silver]';
+                if (index === 2) return 'bg-orange-400 text-black shadow-[0_0_10px_orange]';
+                return 'bg-gray-700 text-gray-300';
             };
 
-            // Logic: Extract User ID
             const getUserId = () => {
                 const url = window.location.href;
-                
-                // 1. Check Query Params (?user_id=)
-                const urlParams = new URLSearchParams(window.location.search);
-                if (urlParams.has('user_id')) return urlParams.get('user_id');
-
-                // 2. Check Hash Params (#user_id=)
-                if (window.location.hash) {
-                    const hash = window.location.hash.substring(1); // remove #
-                    const hashParams = new URLSearchParams(hash);
-                    if (hashParams.has('user_id')) return hashParams.get('user_id');
-                }
-
-                // 3. Regex Fallback (Find any 24-char hex string preceded by user_id=)
-                // This helps with weird iframe wrappers or double-encoded URLs
-                const regex = /[?&]user_id=([a-fA-F0-9]{24})/;
-                const match = url.match(regex);
-                if (match && match[1]) return match[1];
-
-                return null;
+                const match = url.match(/[?&]user_id=([a-fA-F0-9]{24})/);
+                return (match && match[1]) ? match[1] : null;
             };
 
             const fetchData = async () => {
                 userId.value = getUserId();
-
-                if (!userId.value) {
-                    error.value = "User ID not found in URL.";
-                    loading.value = false;
-                    return;
-                }
-
-                try {
-                    // API Call
-                    const response = await fetch(`${API_BASE_URL}/?user_id=${userId.value}`, {
-                        method: 'GET',
-                        mode: 'cors',
-                        credentials: 'omit', // Important for third-party context
-                        headers: {
-                            'Content-Type': 'application/json'
+                if (userId.value) {
+                    try {
+                        const response = await fetch(`${API_BASE_URL}/?user_id=${userId.value}`, {
+                            credentials: 'omit'
+                        });
+                        if (response.ok) {
+                            userData.value = await response.json();
+                        } else {
+                            throw new Error("API Error");
                         }
-                    });
-
-                    if (!response.ok) {
-                        if (response.status === 429) throw new Error("Too many requests. Please wait.");
-                        if (response.status === 422) throw new Error("Invalid User ID format.");
-                        throw new Error(`Server error: ${response.status}`);
+                    } catch (e) {
+                        error.value = "Connection Failed";
                     }
-
-                    const data = await response.json();
-                    userData.value = data;
-                    loading.value = false;
-
-                } catch (err) {
-                    console.error("Fetch Error:", err);
-                    error.value = err.message || "Network Error";
-                    loading.value = false;
                 }
+                loading.value = false;
             };
 
-            onMounted(() => {
-                fetchData();
-            });
+            onMounted(fetchData);
 
             return {
                 currentLang,
@@ -436,7 +494,8 @@
                 error,
                 rankingPrizes: RANKING_PRIZES,
                 formatNumber,
-                userId
+                getRankBadgeClass,
+                giftUrl
             };
         }
     }).mount('#app');
