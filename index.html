@@ -22,7 +22,7 @@
             --text-sub: #d0d0d0;
             --border-color: rgba(255, 255, 255, 0.15);
 
-            --row-height: 60px;
+            --row-height: 42px;
             
             --font-stack: 'Roboto', 'Noto Sans TC', sans-serif;
         }
@@ -36,7 +36,8 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            padding: 40px 15px;
+            /* 縮減整體上下內距 */
+            padding: 20px 15px;
             background-image: 
                 radial-gradient(circle at 50% 0%, rgba(0, 210, 190, 0.1) 0%, transparent 60%),
                 linear-gradient(180deg, rgba(20,20,20,0) 0%, rgba(0,0,0,1) 100%);
@@ -69,12 +70,10 @@
             text-shadow: none;
         }
 
-        /* 青色鑽石濾鏡 */
         .d-cyan {
             filter: sepia(100%) hue-rotate(125deg) saturate(350%) brightness(1.1) drop-shadow(0 0 5px rgba(0, 210, 190, 0.4));
         }
 
-        /* 金色鑽石濾鏡 */
         .d-gold {
             filter: brightness(0) saturate(100%) invert(83%) sepia(28%) saturate(1063%) hue-rotate(350deg) brightness(102%) contrast(104%) drop-shadow(0 0 8px rgba(252, 246, 186, 0.6));
         }
@@ -90,17 +89,17 @@
             display: flex;
             justify-content: flex-end;
             gap: 8px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .lang-btn {
             background: rgba(255,255,255,0.05);
             border: 1px solid var(--border-color);
             color: #ccc;
-            padding: 6px 16px;
+            padding: 4px 14px;
             border-radius: 50px;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 12px;
             transition: all 0.3s;
         }
 
@@ -114,14 +113,14 @@
         /* --- Hero Section --- */
         .hero {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 25px;
         }
 
         .date-badge {
             color: var(--accent);
-            font-size: 1rem;
+            font-size: 0.9rem;
             letter-spacing: 2px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             font-weight: 700;
             text-shadow: 0 0 10px rgba(0, 210, 190, 0.4);
         }
@@ -129,7 +128,7 @@
         h1 {
             font-size: clamp(2rem, 6vw, 3.5rem);
             font-weight: 900;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             font-style: italic;
             text-transform: uppercase;
             color: #fff;
@@ -154,35 +153,35 @@
             border-top: 1px solid var(--accent);
             border-bottom: 1px solid var(--accent);
             color: #fff;
-            padding: 8px 30px;
-            font-size: 1.2rem;
+            padding: 4px 20px;
+            font-size: 1rem;
             font-weight: 700;
             letter-spacing: 2px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             text-transform: uppercase;
         }
 
         .campaign-highlight {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 500;
-            line-height: 1.5;
+            line-height: 1.4;
             color: #eee;
         }
 
         @media (max-width: 480px) {
-            .campaign-highlight { font-size: 1.1rem; }
-            .campaign-tag { font-size: 1rem; padding: 6px 20px; }
+            .campaign-highlight { font-size: 1rem; }
+            .campaign-tag { font-size: 0.9rem; padding: 4px 15px; }
         }
 
         .gold-row {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 5px;
+            margin-top: 2px;
         }
 
         .gold-text {
-            font-size: clamp(2.5rem, 10vw, 3.8rem);
+            font-size: clamp(2.2rem, 10vw, 3.5rem);
             font-weight: 900;
             background: linear-gradient(to right, var(--gold-start), var(--gold-mid), var(--gold-end));
             -webkit-background-clip: text;
@@ -195,12 +194,12 @@
             display: inline-block;
             background: var(--accent);
             color: #000;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 900;
-            padding: 16px 48px;
+            padding: 12px 40px;
             border-radius: 50px;
             text-decoration: none;
-            box-shadow: 0 0 30px rgba(0, 210, 190, 0.3);
+            box-shadow: 0 0 20px rgba(0, 210, 190, 0.3);
             transition: all 0.2s;
             margin-top: 5px;
             -webkit-font-smoothing: antialiased;
@@ -209,7 +208,7 @@
 
         .cta-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 50px rgba(0, 210, 190, 0.5);
+            box-shadow: 0 0 40px rgba(0, 210, 190, 0.5);
             background: #fff;
         }
 
@@ -217,14 +216,14 @@
         .dashboard {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
-            margin-bottom: 60px;
+            gap: 15px;
+            margin-bottom: 20px;
         }
 
         .dash-card {
             background: var(--bg-panel);
             border: 1px solid var(--border-color);
-            padding: 30px;
+            padding: 15px;
             flex: 1;
             min-width: 300px;
             position: relative;
@@ -243,7 +242,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            gap: 30px;
+            gap: 5px;
         }
 
         .stats-block {
@@ -253,15 +252,15 @@
 
         .stats-label {
             color: var(--text-sub);
-            font-size: 1rem;
-            margin-bottom: 5px;
+            font-size: 0.9rem;
+            margin-bottom: 2px;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 500;
         }
 
         .stats-val {
-            line-height: 1;
+            line-height: 1.1;
             font-weight: 900;
             color: #fff;
             text-shadow: 0 5px 15px rgba(0,0,0,0.5);
@@ -270,7 +269,7 @@
         }
 
         .stats-val.rank-text { 
-            font-size: clamp(2.5rem, 8vw, 3.5rem); 
+            font-size: clamp(2.5rem, 8vw, 3.2rem); 
             color: var(--accent); 
         }
         
@@ -283,29 +282,30 @@
             width: 60%;
             height: 1px;
             background: rgba(255,255,255,0.1);
-            margin: 0 auto;
+            margin: 5px auto;
         }
 
-        /* Right Card */
+        /* Right Card - Fixed Height Rows */
         .detail-row {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
+            align-items: center; /* 確保垂直置中 */
+            height: 44px; /* 設定固定高度 */
+            padding: 0; /* 移除 padding，由 height 控制高度 */
             border-bottom: 1px solid rgba(255,255,255,0.08);
         }
         .detail-row:last-child { border-bottom: none; }
         
         .d-label { 
             color: var(--text-sub); 
-            font-size: 1rem; 
+            font-size: 0.9rem; 
             font-weight: 500;
         }
         
         .d-val { 
             color: #fff; 
             font-weight: 700; 
-            font-size: clamp(1rem, 4vw, 1.3rem);
+            font-size: clamp(1rem, 4vw, 1.2rem);
             font-family: 'Roboto', sans-serif; 
             justify-content: flex-end; 
         }
@@ -319,12 +319,12 @@
         
         .col-header {
             background: #1a1a1d;
-            padding: 20px;
+            padding: 12px;
             color: #fff;
             font-weight: 700;
             text-align: center;
             border-top: 3px solid var(--accent);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             letter-spacing: 1px;
         }
 
@@ -338,30 +338,26 @@
 
         @media (max-width: 768px) {
             .split-header, .split-body { grid-template-columns: 1fr 1fr; }
-            .col-header { 
-                padding: 15px 5px; 
-                font-size: 1rem; 
-                letter-spacing: 0;
-            }
+            .col-header { margin-top: 0; border-left: 0; border-top: 3px solid var(--accent); text-align: center; font-size: 0.9rem; padding: 10px 5px;}
         }
 
         .align-row {
             height: var(--row-height);
             display: flex;
             align-items: center;
-            padding: 0 25px;
+            padding: 0 15px;
             border-bottom: 1px solid var(--border-color);
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         @media (max-width: 480px) {
-            .align-row { padding: 0 10px; font-size: 0.95rem; }
+            .align-row { padding: 0 10px; font-size: 0.9rem; }
         }
         
         .align-row:last-child { border-bottom: none; }
 
         .lb-col { border-right: 1px solid var(--border-color); }
-        .lb-rank { width: 50px; font-weight: 900; color: #666; font-style: italic; font-size: 1.2rem; }
+        .lb-rank { width: 40px; font-weight: 900; color: #666; font-style: italic; font-size: 1.1rem; }
         
         .lb-score { 
             margin-left: auto; 
@@ -372,9 +368,9 @@
             align-items: center;
         }
         
-        .rank-1 { color: var(--gold-mid); text-shadow: 0 0 10px rgba(255, 215, 0, 0.4); font-size: 1.4rem; }
-        .rank-2 { color: #e0e0e0; text-shadow: 0 0 10px rgba(255, 255, 255, 0.4); font-size: 1.4rem; }
-        .rank-3 { color: #d4a58e; text-shadow: 0 0 10px rgba(212, 165, 142, 0.4); font-size: 1.4rem; }
+        .rank-1 { color: var(--gold-mid); text-shadow: 0 0 10px rgba(255, 215, 0, 0.4); font-size: 1.3rem; }
+        .rank-2 { color: #e0e0e0; text-shadow: 0 0 10px rgba(255, 255, 255, 0.4); font-size: 1.3rem; }
+        .rank-3 { color: #d4a58e; text-shadow: 0 0 10px rgba(212, 165, 142, 0.4); font-size: 1.3rem; }
 
         .r-val { 
             width: 100%; 
@@ -389,25 +385,25 @@
 
         /* --- Rules --- */
         .rules-section {
-            margin-top: 60px;
-            padding: 30px;
+            margin-top: 20px;
+            padding: 20px;
             background: rgba(255,255,255,0.03);
             border-radius: 10px;
             color: #ccc;
         }
-        .rules-title { font-weight: 700; color: #fff; margin-bottom: 20px; font-size: 1.2rem; border-left: 3px solid var(--accent); padding-left: 10px;}
+        .rules-title { font-weight: 700; color: #fff; margin-bottom: 15px; font-size: 1.1rem; border-left: 3px solid var(--accent); padding-left: 10px;}
         .rules-list {
             list-style: none;
             padding-left: 0;
         }
         .rules-list li {
-            margin-bottom: 12px;
-            line-height: 1.6;
-            font-size: 1rem;
+            margin-bottom: 6px;
+            line-height: 1.5;
+            font-size: 0.9rem;
             padding-left: 20px;
             position: relative;
         }
-        
+        /* 綠色圓點 */
         .rules-list li::before {
             content: '•';
             position: absolute;
@@ -415,12 +411,12 @@
             top: 0;
             color: var(--accent);
             font-size: 1.5rem;
-            line-height: 1.5rem;
+            line-height: 1.3rem;
         }
 
         .error-msg {
             text-align: center;
-            padding: 15px;
+            padding: 10px;
             background: rgba(255, 50, 50, 0.15);
             color: #ff8080;
             margin-bottom: 20px;
@@ -468,7 +464,7 @@
             <span data-i18n="error_desc">讀取失敗</span> <span id="debug-text" style="font-size:0.8em; opacity: 0.8;"></span>
         </div>
 
-        <!-- Dashboard (Symmetrical) -->
+        <!-- Dashboard (Symmetrical & Compact) -->
         <div id="stats-content" class="dashboard">
             <!-- Left Card: Rank & Total -->
             <div class="dash-card dash-left">
@@ -485,6 +481,7 @@
                     <div class="stats-label" data-i18n="total_spent">總消費</div>
                     <div class="stats-val total-text val-wrapper">
                         <span id="disp-total">0</span>
+                        <!-- 縮小後的青色鑽石 (0.75em) -->
                         <span class="d-emoji d-lg d-cyan">💎</span>
                     </div>
                 </div>
@@ -636,13 +633,13 @@
                 error_desc: "読み込みに失敗しました。",
                 lb_title: "ランキング",
                 rewards_title: "ランキング報酬",
-                breakdown_gift: "ギフト",
+                breakdown_gift: "ライブギフト",
                 breakdown_ticket: "有料ショー",
                 breakdown_menu: "セクシーショー",
                 breakdown_lovense: "リモートバイブ",
                 rules_title: "注意事項",
                 rules_list: [
-                    "対象：『ギフト』、『有料ショー』、『セクシーショー』、『リモートバイブ』のみ。",
+                    "対象：『ライブギフト』、『有料ショー』、『セクシーショー』、『リモートバイブ』のみ。",
                     "同ダイヤ数の場合は、先に達成した方が上位となります。",
                     "報酬はイベント終了後3営業日以内に配布されます。",
                     "データ表示にはログインが必要です。",
