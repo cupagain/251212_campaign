@@ -36,7 +36,6 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            /* 縮減整體上下內距 */
             padding: 20px 15px;
             background-image: 
                 radial-gradient(circle at 50% 0%, rgba(0, 210, 190, 0.1) 0%, transparent 60%),
@@ -81,8 +80,12 @@
         /* 尺寸設定 */
         .d-sm { font-size: 0.9em; position: relative; top: -1px; } 
         .d-md { font-size: 0.85em; position: relative; top: -1px; } 
-        .d-lg { font-size: 0.75em; margin-left: 10px; position: relative; top: -2px; } 
-        .d-xl { font-size: 0.85em; margin-left: 8px; position: relative; top: 0; }
+        
+        /* 總消費用：縮小 */
+        .d-lg { font-size: 0.65em; margin-left: 8px; position: relative; top: -2px; } 
+        
+        /* Hero 用：放大 */
+        .d-xl { font-size: 1.1em; margin-left: 10px; position: relative; top: -1px; }
 
         /* --- Language Switcher --- */
         .lang-switch {
@@ -157,7 +160,7 @@
             font-size: 1rem;
             font-weight: 700;
             letter-spacing: 2px;
-            margin-bottom: 8px;
+            margin-bottom: 25px; /* 增加間距 (原 10px) */
             text-transform: uppercase;
         }
 
@@ -177,7 +180,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 2px;
+            margin-top: 5px;
         }
 
         .gold-text {
@@ -285,13 +288,13 @@
             margin: 5px auto;
         }
 
-        /* Right Card - Fixed Height Rows */
+        /* Right Card */
         .detail-row {
             display: flex;
             justify-content: space-between;
-            align-items: center; /* 確保垂直置中 */
-            height: 44px; /* 設定固定高度 */
-            padding: 0; /* 移除 padding，由 height 控制高度 */
+            align-items: center;
+            height: 44px;
+            padding: 0;
             border-bottom: 1px solid rgba(255,255,255,0.08);
         }
         .detail-row:last-child { border-bottom: none; }
@@ -310,10 +313,11 @@
             justify-content: flex-end; 
         }
 
-        /* --- Split Layout --- */
+        /* --- Split Layout (Modified Ratio) --- */
         .split-header {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            /* 左欄寬，右欄窄 */
+            grid-template-columns: 1.4fr 1fr;
             margin-bottom: 0;
         }
         
@@ -330,14 +334,16 @@
 
         .split-body {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            /* 左欄寬，右欄窄 */
+            grid-template-columns: 1.4fr 1fr;
             background: var(--bg-panel);
             border: 1px solid var(--border-color);
             border-top: none;
         }
 
         @media (max-width: 768px) {
-            .split-header, .split-body { grid-template-columns: 1fr 1fr; }
+            /* 手機版稍微調整比例，避免右邊太擠，但保持左寬右窄 */
+            .split-header, .split-body { grid-template-columns: 1.3fr 1fr; }
             .col-header { margin-top: 0; border-left: 0; border-top: 3px solid var(--accent); text-align: center; font-size: 0.9rem; padding: 10px 5px;}
         }
 
@@ -449,6 +455,7 @@
                     
                     <div class="gold-row">
                         <span class="gold-text">550,000</span>
+                        <!-- 放大並對齊的金色鑽石 -->
                         <span class="d-emoji d-xl d-gold">💎</span>
                     </div>
                 </div>
@@ -481,7 +488,7 @@
                     <div class="stats-label" data-i18n="total_spent">總消費</div>
                     <div class="stats-val total-text val-wrapper">
                         <span id="disp-total">0</span>
-                        <!-- 縮小後的青色鑽石 (0.75em) -->
+                        <!-- 縮小後的青色鑽石 -->
                         <span class="d-emoji d-lg d-cyan">💎</span>
                     </div>
                 </div>
@@ -545,7 +552,7 @@
     </div>
 
     <script>
-        const API_BASE_URL = "https://swag-campaign-api-388277274438.asia-east1.run.app"; 
+        const API_BASE_URL = "https://swag-campaign-api-905468082258.asia-east1.run.app"; 
         
         const DIAMOND_HTML = '<span class="d-emoji d-sm d-cyan">💎</span>';
 
@@ -633,13 +640,13 @@
                 error_desc: "読み込みに失敗しました。",
                 lb_title: "ランキング",
                 rewards_title: "ランキング報酬",
-                breakdown_gift: "ライブギフト",
+                breakdown_gift: "ギフト",
                 breakdown_ticket: "有料ショー",
                 breakdown_menu: "セクシーショー",
                 breakdown_lovense: "リモートバイブ",
                 rules_title: "注意事項",
                 rules_list: [
-                    "対象：『ライブギフト』、『有料ショー』、『セクシーショー』、『リモートバイブ』のみ。",
+                    "対象：『ギフト』、『有料ショー』、『セクシーショー』、『リモートバイブ』のみ。",
                     "同ダイヤ数の場合は、先に達成した方が上位となります。",
                     "報酬はイベント終了後3営業日以内に配布されます。",
                     "データ表示にはログインが必要です。",
