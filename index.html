@@ -66,40 +66,35 @@
             transform: translateZ(0); 
             display: inline-block;
             vertical-align: baseline;
-            /* 重要：還原文字填色，確保 Emoji 顯示 */
             -webkit-text-fill-color: initial; 
             text-shadow: none;
         }
 
-        /* 
-           青色鑽石濾鏡 (#00d2be) 
-           調色：轉為青色調
-        */
+        /* 青色鑽石 (#00d2be) */
         .d-cyan {
             filter: sepia(100%) hue-rotate(125deg) saturate(350%) brightness(1.1) drop-shadow(0 0 5px rgba(0, 210, 190, 0.4));
         }
 
         /* 
-           金色鑽石濾鏡 
-           調色：目標對齊 #bf953f ~ #fcf6ba
-           參數：Sepia(基底) -> Hue(微調至金黃) -> Saturate(增強金屬感) -> Brightness(匹配文字亮度)
+           金色鑽石濾鏡 (修正版)
+           調整為更接近文字漸層的黃金色，而非深橘色
         */
         .d-gold {
-            filter: sepia(100%) hue-rotate(5deg) saturate(600%) brightness(1.2) contrast(1.2) drop-shadow(0 0 10px rgba(252, 246, 186, 0.4));
+            filter: brightness(0) saturate(100%) invert(83%) sepia(28%) saturate(1063%) hue-rotate(350deg) brightness(102%) contrast(104%) drop-shadow(0 0 8px rgba(252, 246, 186, 0.6));
         }
 
-        /* 尺寸設定：全部縮小以對齊數字 */
-        /* 列表用 (文字 1.1rem) -> 鑽石 0.9em */
+        /* 尺寸設定 */
         .d-sm { font-size: 0.9em; position: relative; top: -1px; } 
-        
-        /* 細項用 (文字 1.3rem) -> 鑽石 0.85em */
         .d-md { font-size: 0.85em; position: relative; top: -1px; } 
-        
-        /* 總消費用 (文字 2.5rem) -> 鑽石 0.75em (視覺上更協調) */
         .d-lg { font-size: 0.75em; margin-left: 10px; position: relative; top: -2px; } 
         
-        /* Hero 用 (文字 2.6rem) -> 鑽石 0.8em */
-        .d-xl { font-size: 0.8em; margin-left: 10px; position: relative; top: -2px; }
+        /* Hero 用：設為 0.85em，確保跟 550,000 對齊且大小一致 */
+        .d-xl { 
+            font-size: 0.85em; 
+            margin-left: 8px; 
+            position: relative; 
+            top: 0; /* Flexbox 會處理對齊，重置 top */
+        }
 
         /* --- Language Switcher --- */
         .lang-switch {
@@ -150,6 +145,15 @@
             text-transform: uppercase;
             color: #fff;
             text-shadow: 0 0 30px rgba(255,255,255,0.3);
+            white-space: nowrap; /* 盡量不換行 */
+        }
+
+        /* 手機版字體調整：防止斷行 */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.2rem; /* 縮小字體以適應手機螢幕 */
+                white-space: normal; /* 允許換行，但字體夠小應該不會斷得難看 */
+            }
         }
 
         .marketing-box {
@@ -177,6 +181,7 @@
             color: #eee;
         }
 
+        /* 金色文字容器：使用 Flexbox 強制對齊 */
         .gold-row {
             display: flex;
             align-items: center;
@@ -187,12 +192,15 @@
         .gold-text {
             font-size: 2.6rem;
             font-weight: 900;
-            /* 金色漸層文字 */
             background: linear-gradient(to right, var(--gold-start), var(--gold-mid), var(--gold-end));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 20px rgba(252, 246, 186, 0.2);
             white-space: nowrap;
+        }
+        
+        @media (max-width: 480px) {
+            .gold-text { font-size: 2.2rem; }
         }
 
         .cta-btn {
@@ -336,14 +344,34 @@
             border-top: none;
         }
 
+        /* 手機版：保持兩欄並排 */
         @media (max-width: 768px) {
-            .split-header, .split-body { grid-template-columns: 1fr; }
-            .col-header { margin-top: 30px; border-left: 4px solid var(--accent); border-top: 1px solid var(--border-color); text-align: left; }
-            .col-header:first-child { margin-top: 0; }
+            /* 儀表板保持堆疊 (因為內容多) */
+            .dashboard { flex-direction: column; }
+            .dash-card { min-width: auto; }
+
+            /* 排行榜與獎勵：保持左右兩欄 (1fr 1fr) */
+            .split-header, .split-body { grid-template-columns: 1fr 1fr; }
+            
+            /* 調整手機版內距與字體，避免過擠 */
+            .col-header { 
+                padding: 15px 5px; 
+                font-size: 1rem; 
+            }
+            .align-row { 
+                padding: 0 10px; 
+                font-size: 0.95rem; 
+            }
+            
+            /* 隱藏過長的排名文字，用數字就好 (可選) */
+            .lb-rank { margin-right: 5px; }
+            
+            /* 鑽石縮小一點 */
+            .d-sm { font-size: 0.8em; }
         }
 
         .align-row {
-            height: 60px;
+            height: var(--row-height);
             display: flex;
             align-items: center;
             padding: 0 25px;
@@ -443,10 +471,11 @@
                 <div class="campaign-tag" data-i18n="subtitle">直播耗鑽排行榜</div>
                 <div class="campaign-highlight">
                     <span data-i18n="desc_prefix">應援人氣女神奪大獎，前十名瓜分總計</span><br>
-                    <!-- 金色文字與金色鑽石 -->
+                    
                     <div class="gold-row">
+                        <!-- 金色文字 -->
                         <span class="gold-text">550,000</span>
-                        <!-- 縮小並使用金色濾鏡的鑽石 -->
+                        <!-- 金色鑽石 Emoji (Filter Adjusted) -->
                         <span class="d-emoji d-xl d-gold">💎</span>
                     </div>
                 </div>
@@ -479,7 +508,7 @@
                     <div class="stats-label" data-i18n="total_spent">總消費</div>
                     <div class="stats-val total-text val-wrapper">
                         <span id="disp-total">0</span>
-                        <!-- 縮小後的青色鑽石 (與數字對齊) -->
+                        <!-- 縮小後的青色鑽石 (0.75em) -->
                         <span class="d-emoji d-lg d-cyan">💎</span>
                     </div>
                 </div>
