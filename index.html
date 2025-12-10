@@ -14,7 +14,6 @@
             
             --accent: #00d2be;
             
-            /* 金色漸層參考色 */
             --gold-start: #bf953f;
             --gold-mid: #fcf6ba;
             --gold-end: #b38728;
@@ -70,15 +69,12 @@
             text-shadow: none;
         }
 
-        /* 青色鑽石 (#00d2be) */
+        /* 青色鑽石濾鏡 */
         .d-cyan {
             filter: sepia(100%) hue-rotate(125deg) saturate(350%) brightness(1.1) drop-shadow(0 0 5px rgba(0, 210, 190, 0.4));
         }
 
-        /* 
-           金色鑽石濾鏡 (修正版)
-           調整為更接近文字漸層的黃金色，而非深橘色
-        */
+        /* 金色鑽石濾鏡 */
         .d-gold {
             filter: brightness(0) saturate(100%) invert(83%) sepia(28%) saturate(1063%) hue-rotate(350deg) brightness(102%) contrast(104%) drop-shadow(0 0 8px rgba(252, 246, 186, 0.6));
         }
@@ -87,14 +83,7 @@
         .d-sm { font-size: 0.9em; position: relative; top: -1px; } 
         .d-md { font-size: 0.85em; position: relative; top: -1px; } 
         .d-lg { font-size: 0.75em; margin-left: 10px; position: relative; top: -2px; } 
-        
-        /* Hero 用：設為 0.85em，確保跟 550,000 對齊且大小一致 */
-        .d-xl { 
-            font-size: 0.85em; 
-            margin-left: 8px; 
-            position: relative; 
-            top: 0; /* Flexbox 會處理對齊，重置 top */
-        }
+        .d-xl { font-size: 0.85em; margin-left: 8px; position: relative; top: 0; }
 
         /* --- Language Switcher --- */
         .lang-switch {
@@ -138,21 +127,20 @@
         }
 
         h1 {
-            font-size: 3.5rem;
+            font-size: clamp(2rem, 6vw, 3.5rem);
             font-weight: 900;
             margin-bottom: 25px;
             font-style: italic;
             text-transform: uppercase;
             color: #fff;
             text-shadow: 0 0 30px rgba(255,255,255,0.3);
-            white-space: nowrap; /* 盡量不換行 */
+            white-space: nowrap;
         }
 
-        /* 手機版字體調整：防止斷行 */
         @media (max-width: 480px) {
             h1 {
-                font-size: 2.2rem; /* 縮小字體以適應手機螢幕 */
-                white-space: normal; /* 允許換行，但字體夠小應該不會斷得難看 */
+                font-size: 2.2rem;
+                white-space: normal;
             }
         }
 
@@ -181,7 +169,11 @@
             color: #eee;
         }
 
-        /* 金色文字容器：使用 Flexbox 強制對齊 */
+        @media (max-width: 480px) {
+            .campaign-highlight { font-size: 1.1rem; }
+            .campaign-tag { font-size: 1rem; padding: 6px 20px; }
+        }
+
         .gold-row {
             display: flex;
             align-items: center;
@@ -190,17 +182,13 @@
         }
 
         .gold-text {
-            font-size: 2.6rem;
+            font-size: clamp(2.5rem, 10vw, 3.8rem);
             font-weight: 900;
             background: linear-gradient(to right, var(--gold-start), var(--gold-mid), var(--gold-end));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 20px rgba(252, 246, 186, 0.2);
             white-space: nowrap;
-        }
-        
-        @media (max-width: 480px) {
-            .gold-text { font-size: 2.2rem; }
         }
 
         .cta-btn {
@@ -216,6 +204,7 @@
             transition: all 0.2s;
             margin-top: 5px;
             -webkit-font-smoothing: antialiased;
+            white-space: nowrap;
         }
 
         .cta-btn:hover {
@@ -280,10 +269,13 @@
             justify-content: center;
         }
 
-        .stats-val.rank-text { font-size: 3.5rem; color: var(--accent); }
+        .stats-val.rank-text { 
+            font-size: clamp(2.5rem, 8vw, 3.5rem); 
+            color: var(--accent); 
+        }
         
         .stats-val.total-text { 
-            font-size: 2.5rem; 
+            font-size: clamp(2rem, 6vw, 2.5rem);
             color: #fff; 
         }
 
@@ -313,7 +305,7 @@
         .d-val { 
             color: #fff; 
             font-weight: 700; 
-            font-size: 1.3rem; 
+            font-size: clamp(1rem, 4vw, 1.3rem);
             font-family: 'Roboto', sans-serif; 
             justify-content: flex-end; 
         }
@@ -344,30 +336,13 @@
             border-top: none;
         }
 
-        /* 手機版：保持兩欄並排 */
         @media (max-width: 768px) {
-            /* 儀表板保持堆疊 (因為內容多) */
-            .dashboard { flex-direction: column; }
-            .dash-card { min-width: auto; }
-
-            /* 排行榜與獎勵：保持左右兩欄 (1fr 1fr) */
             .split-header, .split-body { grid-template-columns: 1fr 1fr; }
-            
-            /* 調整手機版內距與字體，避免過擠 */
             .col-header { 
                 padding: 15px 5px; 
                 font-size: 1rem; 
+                letter-spacing: 0;
             }
-            .align-row { 
-                padding: 0 10px; 
-                font-size: 0.95rem; 
-            }
-            
-            /* 隱藏過長的排名文字，用數字就好 (可選) */
-            .lb-rank { margin-right: 5px; }
-            
-            /* 鑽石縮小一點 */
-            .d-sm { font-size: 0.8em; }
         }
 
         .align-row {
@@ -377,6 +352,10 @@
             padding: 0 25px;
             border-bottom: 1px solid var(--border-color);
             font-size: 1.1rem;
+        }
+
+        @media (max-width: 480px) {
+            .align-row { padding: 0 10px; font-size: 0.95rem; }
         }
         
         .align-row:last-child { border-bottom: none; }
@@ -428,7 +407,7 @@
             padding-left: 20px;
             position: relative;
         }
-        /* 綠色圓點 */
+        
         .rules-list li::before {
             content: '•';
             position: absolute;
@@ -473,9 +452,7 @@
                     <span data-i18n="desc_prefix">應援人氣女神奪大獎，前十名瓜分總計</span><br>
                     
                     <div class="gold-row">
-                        <!-- 金色文字 -->
                         <span class="gold-text">550,000</span>
-                        <!-- 金色鑽石 Emoji (Filter Adjusted) -->
                         <span class="d-emoji d-xl d-gold">💎</span>
                     </div>
                 </div>
@@ -508,7 +485,6 @@
                     <div class="stats-label" data-i18n="total_spent">總消費</div>
                     <div class="stats-val total-text val-wrapper">
                         <span id="disp-total">0</span>
-                        <!-- 縮小後的青色鑽石 (0.75em) -->
                         <span class="d-emoji d-lg d-cyan">💎</span>
                     </div>
                 </div>
@@ -574,7 +550,6 @@
     <script>
         const API_BASE_URL = "https://swag-campaign-api-388277274438.asia-east1.run.app"; 
         
-        // 鑽石 Emoji HTML (包含青色濾鏡)
         const DIAMOND_HTML = '<span class="d-emoji d-sm d-cyan">💎</span>';
 
         const TRANSLATIONS = {
@@ -595,7 +570,7 @@
                 breakdown_lovense: "震動控制",
                 rules_title: "活動說明",
                 rules_list: [
-                    "直播間總鑽石僅計算：「直播禮物」、「限時表演票券」、「挑逗表演」。",
+                    "直播間總鑽石僅計算：「直播禮物」、「限時表演票券」、「挑逗表演」、「震動控制」。",
                     "排行榜鑽石相同者，以先達成者排名在前。",
                     "排名鑽石獎勵將於活動結束後 3 個工作天內派發。",
                     "資料需登入帳號以正確顯示。",
@@ -619,7 +594,7 @@
                 breakdown_lovense: "震动控制",
                 rules_title: "活动说明",
                 rules_list: [
-                    "直播间总钻石仅计算：“直播礼物”，“限时表演票券”，“挑逗表演”。",
+                    "直播间总钻石仅计算：“直播礼物”，“限时表演票券”，“挑逗表演”，“震动控制”。",
                     "排行榜钻石相同者，以先达成者排名在前。",
                     "排名钻石奖励将于活动结束后 3 个工作天内派发。",
                     "资料需登入帐号以正确显示。",
@@ -637,13 +612,13 @@
                 error_desc: "Load failed. Please log in.",
                 lb_title: "Total Diamond Leaderboard",
                 rewards_title: "Rewards",
-                breakdown_gift: "Gifts",
-                breakdown_ticket: "Tickets",
-                breakdown_menu: "Show",
-                breakdown_lovense: "Lovense",
+                breakdown_gift: "Livestream Gift",
+                breakdown_ticket: "Paid Show",
+                breakdown_menu: "Tease Show",
+                breakdown_lovense: "Vibe Control",
                 rules_title: "Rules",
                 rules_list: [
-                    "Total diamonds calculated from: 'Live Gifts', 'Show Tickets', 'Shows' only.",
+                    "Total diamonds calculated from: 'Livestream Gift', 'Paid Show', 'Tease Show', 'Vibe Control' only.",
                     "If diamonds are equal, the first to achieve the amount ranks higher.",
                     "Rewards distributed within 3 working days after event ends.",
                     "Login required to view personal stats.",
@@ -662,12 +637,12 @@
                 lb_title: "ランキング",
                 rewards_title: "ランキング報酬",
                 breakdown_gift: "ギフト",
-                breakdown_ticket: "チケット",
-                breakdown_menu: "ショー",
-                breakdown_lovense: "Lovense",
+                breakdown_ticket: "有料ショー",
+                breakdown_menu: "セクシーショー",
+                breakdown_lovense: "リモートバイブ",
                 rules_title: "注意事項",
                 rules_list: [
-                    "対象：『ライブギフト』、『ショーチケット』、『ショー』のみ。",
+                    "対象：『ギフト』、『有料ショー』、『セクシーショー』、『リモートバイブ』のみ。",
                     "同ダイヤ数の場合は、先に達成した方が上位となります。",
                     "報酬はイベント終了後3営業日以内に配布されます。",
                     "データ表示にはログインが必要です。",
