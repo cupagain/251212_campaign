@@ -2,504 +2,781 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Xmas Campaign 2025</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Vue 3 -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Roboto:wght@500;700;900&display=swap" rel="stylesheet">
-
-    <!-- Custom Config -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        swag: {
-                            teal: '#00d2be', // SWAG Teal
-                            dark: '#0a0a0a',
-                            panel: '#1e1e1e',
-                        },
-                        xmas: {
-                            gold: '#F2C94C',
-                            red: '#D42426'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Roboto', '"Noto Sans TC"', 'sans-serif'],
-                    },
-                    boxShadow: {
-                        'glow': '0 0 20px rgba(0, 210, 190, 0.25)',
-                    }
-                }
-            }
-        }
-    </script>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雙 12 直播狂歡 | Double 12 Live Carnival</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-deep: #050505;
+            --bg-panel: #141416;
+            
+            --accent: #00d2be;
+            
+            /* 金色漸層參考色 */
+            --gold-start: #bf953f;
+            --gold-mid: #fcf6ba;
+            --gold-end: #b38728;
+            
+            --text-main: #ffffff;
+            --text-sub: #d0d0d0;
+            --border-color: rgba(255, 255, 255, 0.15);
+
+            --row-height: 60px;
+            
+            --font-stack: 'Roboto', 'Noto Sans TC', sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            background: radial-gradient(circle at 50% 0%, #1a2c2a 0%, #050505 80%);
-            color: #ffffff;
+            font-family: var(--font-stack);
+            background-color: var(--bg-deep);
+            color: var(--text-main);
             min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 40px 15px;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(0, 210, 190, 0.1) 0%, transparent 60%),
+                linear-gradient(180deg, rgba(20,20,20,0) 0%, rgba(0,0,0,1) 100%);
             -webkit-font-smoothing: antialiased;
         }
 
-        .glass-panel {
-            background: rgba(30, 30, 30, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        .container {
+            width: 100%;
+            max-width: 900px;
+            position: relative;
+            z-index: 2;
         }
 
-        /* 裝飾圖片 */
-        .deco-wreath {
+        /* --- Diamond Styling --- */
+        .val-wrapper {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+
+        .d-emoji {
+            font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            margin-left: 6px;
+            line-height: 1;
+            transform: translateZ(0); 
+            display: inline-block;
+            vertical-align: baseline;
+            /* 重要：還原文字填色，確保 Emoji 顯示 */
+            -webkit-text-fill-color: initial; 
+            text-shadow: none;
+        }
+
+        /* 
+           青色鑽石濾鏡 (#00d2be) 
+           調色：轉為青色調
+        */
+        .d-cyan {
+            filter: sepia(100%) hue-rotate(125deg) saturate(350%) brightness(1.1) drop-shadow(0 0 5px rgba(0, 210, 190, 0.4));
+        }
+
+        /* 
+           金色鑽石濾鏡 
+           調色：目標對齊 #bf953f ~ #fcf6ba
+           參數：Sepia(基底) -> Hue(微調至金黃) -> Saturate(增強金屬感) -> Brightness(匹配文字亮度)
+        */
+        .d-gold {
+            filter: sepia(100%) hue-rotate(5deg) saturate(600%) brightness(1.2) contrast(1.2) drop-shadow(0 0 10px rgba(252, 246, 186, 0.4));
+        }
+
+        /* 尺寸設定：全部縮小以對齊數字 */
+        /* 列表用 (文字 1.1rem) -> 鑽石 0.9em */
+        .d-sm { font-size: 0.9em; position: relative; top: -1px; } 
+        
+        /* 細項用 (文字 1.3rem) -> 鑽石 0.85em */
+        .d-md { font-size: 0.85em; position: relative; top: -1px; } 
+        
+        /* 總消費用 (文字 2.5rem) -> 鑽石 0.75em (視覺上更協調) */
+        .d-lg { font-size: 0.75em; margin-left: 10px; position: relative; top: -2px; } 
+        
+        /* Hero 用 (文字 2.6rem) -> 鑽石 0.8em */
+        .d-xl { font-size: 0.8em; margin-left: 10px; position: relative; top: -2px; }
+
+        /* --- Language Switcher --- */
+        .lang-switch {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-bottom: 30px;
+        }
+
+        .lang-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-color);
+            color: #ccc;
+            padding: 6px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .lang-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #000;
+            font-weight: 700;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .date-badge {
+            color: var(--accent);
+            font-size: 1rem;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(0, 210, 190, 0.4);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 25px;
+            font-style: italic;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 30px rgba(255,255,255,0.3);
+        }
+
+        .marketing-box {
+            margin-bottom: 15px;
+        }
+
+        .campaign-tag {
+            display: inline-block;
+            background: linear-gradient(90deg, transparent, rgba(0, 210, 190, 0.15), transparent);
+            border-top: 1px solid var(--accent);
+            border-bottom: 1px solid var(--accent);
+            color: #fff;
+            padding: 8px 30px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .campaign-highlight {
+            font-size: 1.3rem;
+            font-weight: 500;
+            line-height: 1.5;
+            color: #eee;
+        }
+
+        .gold-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 5px;
+        }
+
+        .gold-text {
+            font-size: 2.6rem;
+            font-weight: 900;
+            /* 金色漸層文字 */
+            background: linear-gradient(to right, var(--gold-start), var(--gold-mid), var(--gold-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(252, 246, 186, 0.2);
+            white-space: nowrap;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: var(--accent);
+            color: #000;
+            font-size: 1.2rem;
+            font-weight: 900;
+            padding: 16px 48px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 0 30px rgba(0, 210, 190, 0.3);
+            transition: all 0.2s;
+            margin-top: 5px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 50px rgba(0, 210, 190, 0.5);
+            background: #fff;
+        }
+
+        /* --- Dashboard --- */
+        .dashboard {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .dash-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        
+        .dash-card::before {
+            content: '';
             position: absolute;
-            top: -20px;
-            right: -20px;
-            width: 110px;
-            z-index: 0;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
         }
 
-        .deco-santa {
+        /* Left Card */
+        .dash-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .stats-block {
+            text-align: center;
+            width: 100%;
+        }
+
+        .stats-label {
+            color: var(--text-sub);
+            font-size: 1rem;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .stats-val {
+            line-height: 1;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            font-family: 'Roboto', sans-serif;
+            justify-content: center;
+        }
+
+        .stats-val.rank-text { font-size: 3.5rem; color: var(--accent); }
+        
+        .stats-val.total-text { 
+            font-size: 2.5rem; 
+            color: #fff; 
+        }
+
+        .divider {
+            width: 60%;
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+            margin: 0 auto;
+        }
+
+        /* Right Card */
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .detail-row:last-child { border-bottom: none; }
+        
+        .d-label { 
+            color: var(--text-sub); 
+            font-size: 1rem; 
+            font-weight: 500;
+        }
+        
+        .d-val { 
+            color: #fff; 
+            font-weight: 700; 
+            font-size: 1.3rem; 
+            font-family: 'Roboto', sans-serif; 
+            justify-content: flex-end; 
+        }
+
+        /* --- Split Layout --- */
+        .split-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            margin-bottom: 0;
+        }
+        
+        .col-header {
+            background: #1a1a1d;
+            padding: 20px;
+            color: #fff;
+            font-weight: 700;
+            text-align: center;
+            border-top: 3px solid var(--accent);
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .split-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-top: none;
+        }
+
+        @media (max-width: 768px) {
+            .split-header, .split-body { grid-template-columns: 1fr; }
+            .col-header { margin-top: 30px; border-left: 4px solid var(--accent); border-top: 1px solid var(--border-color); text-align: left; }
+            .col-header:first-child { margin-top: 0; }
+        }
+
+        .align-row {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            padding: 0 25px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 1.1rem;
+        }
+        
+        .align-row:last-child { border-bottom: none; }
+
+        .lb-col { border-right: 1px solid var(--border-color); }
+        .lb-rank { width: 50px; font-weight: 900; color: #666; font-style: italic; font-size: 1.2rem; }
+        
+        .lb-score { 
+            margin-left: auto; 
+            color: #fff; 
+            font-weight: 700; 
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            align-items: center;
+        }
+        
+        .rank-1 { color: var(--gold-mid); text-shadow: 0 0 10px rgba(255, 215, 0, 0.4); font-size: 1.4rem; }
+        .rank-2 { color: #e0e0e0; text-shadow: 0 0 10px rgba(255, 255, 255, 0.4); font-size: 1.4rem; }
+        .rank-3 { color: #d4a58e; text-shadow: 0 0 10px rgba(212, 165, 142, 0.4); font-size: 1.4rem; }
+
+        .r-val { 
+            width: 100%; 
+            display: flex;
+            align-items: center;
+            justify-content: flex-end; 
+            color: var(--accent); 
+            font-weight: 700; 
+            font-family: 'Roboto', sans-serif; 
+            letter-spacing: 0.5px;
+        }
+
+        /* --- Rules --- */
+        .rules-section {
+            margin-top: 60px;
+            padding: 30px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            color: #ccc;
+        }
+        .rules-title { font-weight: 700; color: #fff; margin-bottom: 20px; font-size: 1.2rem; border-left: 3px solid var(--accent); padding-left: 10px;}
+        .rules-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .rules-list li {
+            margin-bottom: 12px;
+            line-height: 1.6;
+            font-size: 1rem;
+            padding-left: 20px;
+            position: relative;
+        }
+        /* 綠色圓點 */
+        .rules-list li::before {
+            content: '•';
             position: absolute;
-            top: 20px;
-            left: -20px;
-            width: 100px;
-            z-index: 0;
-            transform: rotate(-10deg);
+            left: 0;
+            top: 0;
+            color: var(--accent);
+            font-size: 1.5rem;
+            line-height: 1.5rem;
         }
 
-        .deco-house {
-            /* 修改位置到標題右側，避免擋住底部表格 */
-            position: absolute;
-            top: -10px;
-            right: 0;
-            width: 70px;
-            z-index: 10;
-            opacity: 1;
-            transform: rotate(5deg);
+        .error-msg {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 50, 50, 0.15);
+            color: #ff8080;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 50, 50, 0.3);
+            border-radius: 8px;
         }
-
-        .diamond-icon {
-            display: block;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-        }
-
-        [v-cloak] { display: none; }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
-<div id="app" v-cloak class="relative pb-10 overflow-x-hidden">
+    <div class="container">
+        <!-- Language -->
+        <div class="lang-switch">
+            <button class="lang-btn active" onclick="setLang('tc')">繁體</button>
+            <button class="lang-btn" onclick="setLang('sc')">简体</button>
+            <button class="lang-btn" onclick="setLang('en')">EN</button>
+            <button class="lang-btn" onclick="setLang('jp')">日本語</button>
+        </div>
 
-    <!-- 語言切換 -->
-    <div class="fixed top-4 right-4 z-50 flex gap-2 bg-black/60 backdrop-blur rounded-full p-1 border border-white/10">
-        <button 
-            v-for="lang in ['tw', 'cn', 'en', 'jp']" 
-            :key="lang"
-            @click="currentLang = lang"
-            class="px-3 py-1 rounded-full text-xs font-bold transition-colors uppercase tracking-wider"
-            :class="currentLang === lang ? 'bg-swag-teal text-black' : 'text-gray-400 hover:text-white'">
-            {{ lang }}
-        </button>
+        <!-- Hero -->
+        <div class="hero">
+            <div class="date-badge" data-i18n="date">12/12 - 12/17</div>
+            <h1 data-i18n="title">雙 12 直播狂歡</h1>
+            
+            <div class="marketing-box">
+                <div class="campaign-tag" data-i18n="subtitle">直播耗鑽排行榜</div>
+                <div class="campaign-highlight">
+                    <span data-i18n="desc_prefix">應援人氣女神奪大獎，前十名瓜分總計</span><br>
+                    <!-- 金色文字與金色鑽石 -->
+                    <div class="gold-row">
+                        <span class="gold-text">550,000</span>
+                        <!-- 縮小並使用金色濾鏡的鑽石 -->
+                        <span class="d-emoji d-xl d-gold">💎</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <a href="#" class="cta-btn" data-i18n="cta">查看人氣女神活動</a>
+            </div>
+        </div>
+
+        <!-- Error Msg -->
+        <div id="error-msg" class="error-msg hidden">
+            <span data-i18n="error_desc">讀取失敗</span> <span id="debug-text" style="font-size:0.8em; opacity: 0.8;"></span>
+        </div>
+
+        <!-- Dashboard (Symmetrical) -->
+        <div id="stats-content" class="dashboard">
+            <!-- Left Card: Rank & Total -->
+            <div class="dash-card dash-left">
+                <!-- Rank Block -->
+                <div class="stats-block">
+                    <div class="stats-label" data-i18n="current_rank">當前排名</div>
+                    <div class="stats-val rank-text" id="disp-rank">--</div>
+                </div>
+                
+                <div class="divider"></div>
+
+                <!-- Total Block -->
+                <div class="stats-block">
+                    <div class="stats-label" data-i18n="total_spent">總消費</div>
+                    <div class="stats-val total-text val-wrapper">
+                        <span id="disp-total">0</span>
+                        <!-- 縮小後的青色鑽石 (與數字對齊) -->
+                        <span class="d-emoji d-lg d-cyan">💎</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Card: Details -->
+            <div class="dash-card dash-right">
+                <div class="detail-row">
+                    <span class="d-label" data-i18n="breakdown_gift">直播禮物</span>
+                    <div class="d-val val-wrapper">
+                        <span id="disp-gift">0</span>
+                        <span class="d-emoji d-md d-cyan">💎</span>
+                    </div>
+                </div>
+                <div class="detail-row">
+                    <span class="d-label" data-i18n="breakdown_ticket">限時表演</span>
+                    <div class="d-val val-wrapper">
+                        <span id="disp-ticket">0</span>
+                        <span class="d-emoji d-md d-cyan">💎</span>
+                    </div>
+                </div>
+                <div class="detail-row">
+                    <span class="d-label" data-i18n="breakdown_menu">挑逗表演</span>
+                    <div class="d-val val-wrapper">
+                        <span id="disp-command">0</span>
+                        <span class="d-emoji d-md d-cyan">💎</span>
+                    </div>
+                </div>
+                <div class="detail-row">
+                    <span class="d-label" data-i18n="breakdown_lovense">震動控制</span>
+                    <div class="d-val val-wrapper">
+                        <span id="disp-lovense">0</span>
+                        <span class="d-emoji d-md d-cyan">💎</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Aligned Leaderboard & Rewards -->
+        <div class="split-header">
+            <div class="col-header" data-i18n="lb_title">總鑽排行榜</div>
+            <div class="col-header" data-i18n="rewards_title">排名獎勵</div>
+        </div>
+        <div class="split-body">
+            <!-- Left: Leaderboard -->
+            <div class="lb-col" id="leaderboard-body">
+                <!-- JS Generated -->
+            </div>
+
+            <!-- Right: Rewards -->
+            <div class="reward-col" id="rewards-body">
+                <!-- JS Generated -->
+            </div>
+        </div>
+
+        <!-- Rules -->
+        <div class="rules-section">
+            <div class="rules-title" data-i18n="rules_title">活動說明</div>
+            <ul class="rules-list" id="rules-list"></ul>
+        </div>
     </div>
 
-    <main class="max-w-md mx-auto px-4 pt-10 relative z-10">
+    <script>
+        const API_BASE_URL = "https://swag-campaign-api-388277274438.asia-east1.run.app"; 
         
-        <!-- SECTION 1: HERO & EVENT INFO -->
-        <header class="text-center mb-6 relative">
-            <img src="https://public.swag.live/products/livestream-wreath.png" class="deco-wreath" alt="Wreath">
-            <img src="https://public.swag.live/products/livestream-coming.png" class="deco-santa" alt="Santa">
+        // 鑽石 Emoji HTML (包含青色濾鏡)
+        const DIAMOND_HTML = '<span class="d-emoji d-sm d-cyan">💎</span>';
 
-            <div class="relative z-10 pt-4">
-                <p class="text-swag-teal text-xs font-bold tracking-widest uppercase mb-2 border border-swag-teal/30 inline-block px-3 py-1 rounded-full bg-swag-teal/10">
-                    {{ t.duration }}
-                </p>
-                
-                <h1 class="text-4xl font-black text-white mb-2 drop-shadow-lg tracking-tight">
-                    {{ t.title }}
-                </h1>
+        const TRANSLATIONS = {
+            tc: {
+                date: "12/12 00:00 - 12/17 23:59 (GMT+8)",
+                title: "雙 12 直播狂歡",
+                subtitle: "直播耗鑽排行榜",
+                desc_prefix: "應援人氣女神奪大獎，前十名瓜分總計",
+                cta: "查看人氣女神活動",
+                current_rank: "當前排名",
+                total_spent: "總消費",
+                error_desc: "讀取失敗，請確認已登入。",
+                lb_title: "總鑽排行榜",
+                rewards_title: "排名獎勵",
+                breakdown_gift: "直播禮物",
+                breakdown_ticket: "限時表演",
+                breakdown_menu: "挑逗表演",
+                breakdown_lovense: "震動控制",
+                rules_title: "活動說明",
+                rules_list: [
+                    "直播間總鑽石僅計算：「直播禮物」、「限時表演票券」、「挑逗表演」。",
+                    "排行榜鑽石相同者，以先達成者排名在前。",
+                    "排名鑽石獎勵將於活動結束後 3 個工作天內派發。",
+                    "資料需登入帳號以正確顯示。",
+                    "最終結果以官方計算為準。"
+                ]
+            },
+            sc: {
+                date: "12/12 00:00 - 12/17 23:59 (GMT+8)",
+                title: "双 12 直播狂欢",
+                subtitle: "直播耗钻排行榜",
+                desc_prefix: "应援人气女神夺大奖，前十名瓜分总计",
+                cta: "查看人气女神活动",
+                current_rank: "当前排名",
+                total_spent: "总消费",
+                error_desc: "读取失败，请确认已登录。",
+                lb_title: "总钻排行榜",
+                rewards_title: "排名奖励",
+                breakdown_gift: "直播礼物",
+                breakdown_ticket: "限时表演",
+                breakdown_menu: "挑逗表演",
+                breakdown_lovense: "震动控制",
+                rules_title: "活动说明",
+                rules_list: [
+                    "直播间总钻石仅计算：“直播礼物”，“限时表演票券”，“挑逗表演”。",
+                    "排行榜钻石相同者，以先达成者排名在前。",
+                    "排名钻石奖励将于活动结束后 3 个工作天内派发。",
+                    "资料需登入帐号以正确显示。",
+                    "最终结果以官方计算为准。"
+                ]
+            },
+            en: {
+                date: "Dec 12 - Dec 17 (GMT+8)",
+                title: "Double 12 Carnival",
+                subtitle: "Diamond Spending Leaderboard",
+                desc_prefix: "Support Goddesses & Win Big! Share total",
+                cta: "View Event",
+                current_rank: "Rank",
+                total_spent: "Total",
+                error_desc: "Load failed. Please log in.",
+                lb_title: "Total Diamond Leaderboard",
+                rewards_title: "Rewards",
+                breakdown_gift: "Gifts",
+                breakdown_ticket: "Tickets",
+                breakdown_menu: "Show",
+                breakdown_lovense: "Lovense",
+                rules_title: "Rules",
+                rules_list: [
+                    "Total diamonds calculated from: 'Live Gifts', 'Show Tickets', 'Shows' only.",
+                    "If diamonds are equal, the first to achieve the amount ranks higher.",
+                    "Rewards distributed within 3 working days after event ends.",
+                    "Login required to view personal stats.",
+                    "Official calculation results are final."
+                ]
+            },
+            jp: {
+                date: "12/12 - 12/17 (GMT+8)",
+                title: "ダブル12 カーニバル",
+                subtitle: "ダイヤ消費ランキング",
+                desc_prefix: "女神を応援して大賞を狙おう！総額",
+                cta: "イベントを見る",
+                current_rank: "現在の順位",
+                total_spent: "合計消費",
+                error_desc: "読み込みに失敗しました。",
+                lb_title: "ランキング",
+                rewards_title: "ランキング報酬",
+                breakdown_gift: "ギフト",
+                breakdown_ticket: "チケット",
+                breakdown_menu: "ショー",
+                breakdown_lovense: "Lovense",
+                rules_title: "注意事項",
+                rules_list: [
+                    "対象：『ライブギフト』、『ショーチケット』、『ショー』のみ。",
+                    "同ダイヤ数の場合は、先に達成した方が上位となります。",
+                    "報酬はイベント終了後3営業日以内に配布されます。",
+                    "データ表示にはログインが必要です。",
+                    "最終結果は公式の集計に準じます。"
+                ]
+            }
+        };
 
-                <!-- 新增：指定禮物提示 -->
-                <p class="text-xmas-gold font-bold text-sm mb-6 bg-black/40 inline-block px-4 py-1.5 rounded-lg border border-xmas-gold/30">
-                    🎁 {{ t.giftRequirement }}
-                </p>
+        const MOCK_LEADERBOARD = [
+            { rank: 1, score: 917274 },
+            { rank: 2, score: 816167 },
+            { rank: 3, score: 591688 },
+            { rank: 4, score: 568800 },
+            { rank: 5, score: 532795 },
+            { rank: 6, score: 499997 },
+            { rank: 7, score: 482676 },
+            { rank: 8, score: 427947 },
+            { rank: 9, score: 397675 },
+            { rank: 10, score: 389995 }
+        ];
 
-                <!-- 活動獎勵總覽卡片 -->
-                <div class="glass-panel rounded-2xl overflow-hidden text-left relative z-10">
-                    
-                    <!-- 上半部：抽獎 -->
-                    <div class="p-5 border-b border-white/10 bg-gradient-to-r from-swag-teal/10 to-transparent">
-                        <div class="flex items-center justify-between mb-2">
-                            <h2 class="text-lg font-bold text-white">{{ t.drawTitle }}</h2>
-                            <!-- 本地化標籤 -->
-                            <span class="text-xs bg-xmas-red text-white px-2 py-0.5 rounded font-bold tracking-wide">
-                                {{ t.badgeDraw }}
-                            </span>
-                        </div>
-                        <p class="text-gray-300 text-sm mb-3">{{ t.drawDesc }}</p>
-                        
-                        <!-- 鑽石顯示區塊 (修正對齊與大小) -->
-                        <div class="flex items-center gap-4 bg-black/30 p-3 rounded-lg border border-white/5">
-                            <img src="https://public.swag.live/notifications/custom/EL/1212_campaign.png" class="diamond-icon w-12 h-12 shrink-0" alt="Diamond">
-                            <div class="flex flex-col justify-center">
-                                <p class="text-3xl font-black text-swag-teal leading-none mb-1">10,000</p>
-                                <p class="text-[10px] text-gray-400 uppercase tracking-wider leading-none">{{ t.diamondsEach }}</p>
-                            </div>
-                        </div>
-                    </div>
+        const REWARDS = [
+            100000, 90000, 80000, 70000, 60000, 50000, 40000, 30000, 20000, 10000
+        ];
 
-                    <!-- 下半部：排行 -->
-                    <div class="p-5 bg-gradient-to-r from-xmas-gold/10 to-transparent">
-                        <div class="flex items-center justify-between mb-2">
-                            <h2 class="text-lg font-bold text-white">{{ t.rankTitle }}</h2>
-                            <!-- 本地化標籤 -->
-                            <span class="text-xs bg-xmas-gold text-black px-2 py-0.5 rounded font-bold tracking-wide">
-                                {{ t.badgeRank }}
-                            </span>
-                        </div>
-                        <p class="text-gray-300 text-sm mb-3">{{ t.rankDesc }}</p>
-                        
-                        <!-- 鑽石顯示區塊 (修正對齊與大小) -->
-                        <div class="flex items-center gap-4 bg-black/30 p-3 rounded-lg border border-white/5">
-                            <img src="https://public.swag.live/notifications/custom/EL/1212_campaign.png" class="diamond-icon w-12 h-12 shrink-0" alt="Diamond">
-                            <div class="flex flex-col justify-center">
-                                <p class="text-3xl font-black text-xmas-gold leading-none mb-1">100,000</p>
-                                <p class="text-[10px] text-gray-400 uppercase tracking-wider leading-none">{{ t.maxPrize }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CTA Button -->
-                <a :href="giftUrl" target="_blank" 
-                   class="block mt-4 w-full py-4 rounded-xl bg-gradient-to-r from-swag-teal to-teal-600 text-black font-black text-xl shadow-glow hover:brightness-110 transition active:scale-[0.98]">
-                    {{ t.ctaButton }}
-                </a>
-            </div>
-        </header>
-
-        <!-- SECTION 2: DASHBOARD -->
-        <section class="mb-8 relative z-20">
-            <div class="glass-panel rounded-2xl p-6">
-                
-                <div v-if="loading" class="py-8 text-center text-gray-400">
-                    {{ t.loading }}
-                </div>
-                <div v-else-if="error" class="py-6 text-center text-xmas-red font-bold">
-                    {{ error }}
-                </div>
-                
-                <div v-else>
-                    <!-- 1. 抽獎資格 -->
-                    <div class="mb-6 text-center p-4 rounded-xl border-2 transition-colors"
-                         :class="userData.is_eligible 
-                            ? 'bg-swag-teal/10 border-swag-teal' 
-                            : 'bg-gray-800/40 border-gray-600'">
-                        <p class="text-sm font-bold text-gray-400 mb-1 uppercase tracking-widest">{{ t.lotteryStatus }}</p>
-                        <div class="flex items-center justify-center gap-2">
-                            <span class="text-3xl font-black" 
-                                  :class="userData.is_eligible ? 'text-swag-teal' : 'text-gray-500'">
-                                {{ userData.is_eligible ? t.qualified : t.notQualified }}
-                            </span>
-                            <span v-if="userData.is_eligible" class="text-2xl">✅</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mt-2">{{ t.event1Desc }}</p>
-                    </div>
-
-                    <!-- 2. 排名與數據 -->
-                    <div class="grid grid-cols-2 gap-4 mb-8">
-                        <div class="bg-black/40 rounded-xl p-4 text-center border border-white/5">
-                            <p class="text-xs text-gray-500 font-bold mb-1">{{ t.myRank }}</p>
-                            <p class="text-3xl font-bold text-white font-sans">
-                                {{ userData.rank ? userData.rank : '-' }}
-                            </p>
-                        </div>
-                        <div class="bg-black/40 rounded-xl p-4 text-center border border-white/5">
-                            <p class="text-xs text-gray-500 font-bold mb-1">{{ t.myDiamonds }}</p>
-                            <div class="flex items-center justify-center gap-1">
-                                <img src="https://public.swag.live/notifications/custom/EL/1212_campaign.png" class="w-6 h-6" alt="Diamond">
-                                <p class="text-3xl font-bold text-swag-teal font-sans">
-                                    {{ formatNumber(userData.diamond_cost) }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 3. 總鑽榜獎勵表 -->
-                    <div class="relative pt-6 border-t border-white/10">
-                        <!-- 調整薑餅屋位置：放在標題列右側，不擋內容 -->
-                        <div class="flex items-center justify-between mb-4 relative">
-                            <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                                <span class="w-1 h-6 bg-xmas-gold rounded-full"></span>
-                                {{ t.event2Title }}
-                            </h3>
-                            <img src="https://public.swag.live/products/livestream-gingerbread-house.png" class="deco-house" alt="House">
-                        </div>
-
-                        <div class="overflow-hidden rounded-lg border border-white/10 bg-black/20 relative z-0">
-                            <table class="w-full text-sm">
-                                <thead class="bg-white/5 text-gray-400 text-xs uppercase">
-                                    <tr>
-                                        <th class="py-3 px-4 text-left font-medium">{{ t.rankCol }}</th>
-                                        <th class="py-3 px-4 text-right font-medium">{{ t.prizeCol }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-white/5">
-                                    <tr v-for="(prize, index) in rankingPrizes" :key="index" class="hover:bg-white/5 transition">
-                                        <td class="py-3 px-4">
-                                            <div class="flex items-center gap-3">
-                                                <span class="w-6 h-6 flex items-center justify-center rounded-full text-xs font-bold"
-                                                      :class="getRankBadgeClass(index)">
-                                                    {{ index + 1 }}
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="py-3 px-4 text-right">
-                                            <div class="flex items-center justify-end gap-2">
-                                                <span class="font-bold text-lg font-sans" :class="index < 3 ? 'text-xmas-gold' : 'text-gray-200'">
-                                                    {{ formatNumber(prize) }}
-                                                </span>
-                                                <img src="https://public.swag.live/notifications/custom/EL/1212_campaign.png" class="w-5 h-5" alt="Diamond">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- FOOTER: RULES -->
-        <footer class="mb-12 px-4 pb-4">
-            <h4 class="text-xs font-bold text-gray-500 uppercase mb-3 text-center tracking-widest border-b border-gray-800 pb-2">
-                {{ t.rulesTitle }}
-            </h4>
-            <ul class="space-y-2 text-xs text-gray-400 leading-relaxed list-disc list-outside pl-4">
-                <li v-for="(rule, idx) in t.rules" :key="idx">{{ rule }}</li>
-            </ul>
-        </footer>
-
-    </main>
-</div>
-
-<script>
-    const { createApp, ref, computed, onMounted } = Vue;
-
-    // CONFIGURATION
-    const API_BASE_URL = "https://op-campaign-api-905468082258.asia-east1.run.app"; // 請替換
-    const GIFT_URL = "https://swag.live/livestream"; // 請替換
-
-    // 固定規則文案
-    const FIXED_RULES = [
-        "僅限送「聖誕快熱」系列禮物，包含直播間與聊天室。",
-        "排行榜鑽石相同者，以先達成者排名在前。",
-        "總鑽榜獎勵與抽獎獎勵將於活動結束後 3 個工作天內發放。",
-        "資料顯示可能有些微延遲，最終結果以官方計算為準。"
-    ];
-
-    const TRANSLATIONS = {
-        tw: {
-            title: "聖誕狂歡送",
-            duration: "12/12 - 12/16 (GMT+8)",
-            giftRequirement: "僅限送「聖誕快熱」系列禮物",
-            drawTitle: "送禮抽萬鑽",
-            badgeDraw: "抽獎活動",
-            drawDesc: "抽出 50 位幸運兒，每人獨得：",
-            diamondsEach: "每人獲得",
-            rankTitle: "總鑽榜獎勵",
-            badgeRank: "前十名獎勵",
-            rankDesc: "前十名加碼送，最高獲得：",
-            maxPrize: "冠軍獎勵",
-            ctaButton: "立即送禮",
-            
-            lotteryStatus: "抽獎資格",
-            qualified: "已獲得資格",
-            notQualified: "尚未達標",
-            event1Desc: "送出任一指定聖誕禮物即符合資格",
-            
-            myRank: "我的排名",
-            myDiamonds: "累積鑽石",
-            event2Title: "總鑽榜獎勵一覽",
-            rankCol: "排名",
-            prizeCol: "鑽石獎勵",
-            
-            loading: "讀取中...",
-            errorTitle: "無法取得資料",
-            rulesTitle: "活動注意事項",
-            rules: FIXED_RULES
-        },
-        cn: {
-            title: "圣诞狂欢送",
-            duration: "12/12 - 12/16 (GMT+8)",
-            giftRequirement: "仅限送「圣诞快热」系列礼物",
-            drawTitle: "送礼抽万钻",
-            badgeDraw: "抽奖活动",
-            drawDesc: "抽出 50 位幸运儿，每人独得：",
-            diamondsEach: "每人获得",
-            rankTitle: "总钻榜奖励",
-            badgeRank: "前十名奖励",
-            rankDesc: "前十名加码送，最高获得：",
-            maxPrize: "冠军奖励",
-            ctaButton: "立即送礼",
-            lotteryStatus: "抽奖资格",
-            qualified: "已获得资格",
-            notQualified: "尚未达标",
-            event1Desc: "送出任一指定圣诞礼物即符合资格",
-            myRank: "我的排名",
-            myDiamonds: "累积钻石",
-            event2Title: "总钻榜奖励一览",
-            rankCol: "排名",
-            prizeCol: "钻石奖励",
-            loading: "读取中...",
-            errorTitle: "无法获取数据",
-            rulesTitle: "活动注意事项",
-            rules: [
-                "仅限送「圣诞快热」系列礼物，包含直播间与聊天室。",
-                "排行榜钻石相同者，以先达成者排名在前。",
-                "总钻榜奖励与抽奖奖励将于活动结束后 3 个工作天内发放。",
-                "数据显示可能有些微延迟，最终结果以官方计算为准。"
-            ]
-        },
-        en: {
-            title: "Xmas Carnival",
-            duration: "Dec 12 - Dec 16 (GMT+8)",
-            giftRequirement: "Send 'happy-xmas' gifts only",
-            drawTitle: "Lucky Draw",
-            badgeDraw: "LUCKY DRAW",
-            drawDesc: "50 Winners will each receive:",
-            diamondsEach: "Per Winner",
-            rankTitle: "Ranking Rewards",
-            badgeRank: "TOP 10",
-            rankDesc: "Top 10 users will win up to:",
-            maxPrize: "Champion Prize",
-            ctaButton: "Send Gift Now",
-            lotteryStatus: "Eligibility",
-            qualified: "Qualified",
-            notQualified: "Not Eligible",
-            event1Desc: "Send any 'happy-xmas' gift to qualify",
-            myRank: "Rank",
-            myDiamonds: "Diamonds",
-            event2Title: "Ranking Prize List",
-            rankCol: "Rank",
-            prizeCol: "Prize",
-            loading: "Loading...",
-            errorTitle: "Error",
-            rulesTitle: "Rules",
-            rules: [
-                "Only 'happy-xmas' gifts are eligible (Live & Chat).",
-                "Tie-breaker: First to achieve the score ranks higher.",
-                "Ranking and Lucky Draw rewards will be sent within 3 working days after the event.",
-                "Data display may have slight delays; official calculation is final."
-            ]
-        },
-        jp: {
-            title: "クリスマス祭",
-            duration: "12/12 - 12/16 (GMT+8)",
-            giftRequirement: "「メリークリスマス」ギフト限定",
-            drawTitle: "抽選プレゼント",
-            badgeDraw: "抽選イベント",
-            drawDesc: "抽選で50名様にプレゼント：",
-            diamondsEach: "一人あたり",
-            rankTitle: "ランキング報酬",
-            badgeRank: "TOP 10",
-            rankDesc: "上位10名様には最大：",
-            maxPrize: "1位報酬",
-            ctaButton: "ギフトを送る",
-            lotteryStatus: "抽選資格",
-            qualified: "獲得済み",
-            notQualified: "未達成",
-            event1Desc: "「メリークリスマス」ギフト送信で資格GET",
-            myRank: "順位",
-            myDiamonds: "ダイヤ数",
-            event2Title: "ランキング報酬一覧",
-            rankCol: "順位",
-            prizeCol: "報酬",
-            loading: "読み込み中...",
-            errorTitle: "エラー",
-            rulesTitle: "注意事項",
-            rules: [
-                "「メリークリスマス」ギフトのみ対象（ライブ/チャット含む）。",
-                "同点の場合は、先に達成した方が上位となります。",
-                "ランキング報酬と抽選報酬はイベント終了後3営業日以内に配布されます。",
-                "データ表示に遅延がある場合があります。最終結果は公式集計に準じます。"
-            ]
-        }
-    };
-
-    const RANKING_PRIZES = [100000, 90000, 80000, 70000, 60000, 50000, 40000, 30000, 20000, 10000];
-
-    createApp({
-        setup() {
-            const currentLang = ref('tw');
-            const userData = ref({ rank: null, diamond_cost: 0, is_eligible: false });
-            const loading = ref(true);
-            const error = ref(null);
-            const userId = ref(null);
-            const giftUrl = ref(GIFT_URL);
-
-            const t = computed(() => TRANSLATIONS[currentLang.value]);
-
-            const formatNumber = (num) => num ? num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "0";
-
-            // 排名樣式輔助函式
-            const getRankBadgeClass = (index) => {
-                if (index === 0) return 'bg-yellow-400 text-black shadow-[0_0_10px_gold]';
-                if (index === 1) return 'bg-gray-300 text-black shadow-[0_0_10px_silver]';
-                if (index === 2) return 'bg-orange-400 text-black shadow-[0_0_10px_orange]';
-                return 'bg-gray-700 text-gray-300';
-            };
-
-            const getUserId = () => {
-                const url = window.location.href;
-                const match = url.match(/[?&]user_id=([a-fA-F0-9]{24})/);
-                return (match && match[1]) ? match[1] : null;
-            };
-
-            const fetchData = async () => {
-                userId.value = getUserId();
-                if (userId.value) {
-                    try {
-                        const response = await fetch(`${API_BASE_URL}/?user_id=${userId.value}`, {
-                            credentials: 'omit'
-                        });
-                        if (response.ok) {
-                            userData.value = await response.json();
-                        } else {
-                            throw new Error("API Error");
-                        }
-                    } catch (e) {
-                        error.value = "Connection Failed";
-                    }
+        function setLang(lang) {
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (
+                    (lang === 'tc' && btn.innerText.includes('繁')) ||
+                    (lang === 'sc' && btn.innerText.includes('简')) ||
+                    (lang === 'en' && btn.innerText.includes('EN')) ||
+                    (lang === 'jp' && btn.innerText.includes('日'))
+                ) {
+                    btn.classList.add('active');
                 }
-                loading.value = false;
-            };
+            });
 
-            onMounted(fetchData);
+            const t = TRANSLATIONS[lang];
 
-            return {
-                currentLang,
-                t,
-                userData,
-                loading,
-                error,
-                rankingPrizes: RANKING_PRIZES,
-                formatNumber,
-                getRankBadgeClass,
-                giftUrl
-            };
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) el.innerHTML = t[key];
+            });
+
+            const rulesContainer = document.getElementById('rules-list');
+            rulesContainer.innerHTML = '';
+            t.rules_list.forEach(rule => {
+                const li = document.createElement('li');
+                li.textContent = rule;
+                rulesContainer.appendChild(li);
+            });
+
+            renderAlignedLists();
         }
-    }).mount('#app');
-</script>
 
+        function renderAlignedLists() {
+            // Render Leaderboard (Left)
+            const lbBody = document.getElementById('leaderboard-body');
+            lbBody.innerHTML = '';
+            MOCK_LEADERBOARD.forEach(item => {
+                let rankClass = '';
+                if(item.rank === 1) rankClass = 'rank-1';
+                else if(item.rank === 2) rankClass = 'rank-2';
+                else if(item.rank === 3) rankClass = 'rank-3';
+
+                const div = document.createElement('div');
+                div.className = 'align-row';
+                div.innerHTML = `
+                    <span class="lb-rank ${rankClass}">${item.rank}</span>
+                    <span class="lb-score val-wrapper">${item.score.toLocaleString()} ${DIAMOND_HTML}</span>
+                `;
+                lbBody.appendChild(div);
+            });
+
+            // Render Rewards (Right)
+            const rewardsBody = document.getElementById('rewards-body');
+            rewardsBody.innerHTML = '';
+            REWARDS.forEach((val) => {
+                const div = document.createElement('div');
+                div.className = 'align-row';
+                div.innerHTML = `
+                    <div class="r-val val-wrapper">${val.toLocaleString()} ${DIAMOND_HTML}</div>
+                `;
+                rewardsBody.appendChild(div);
+            });
+        }
+
+        function getUserId() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('user_id')) return urlParams.get('user_id');
+            if (window.location.hash) {
+                const hashParams = new URLSearchParams(window.location.hash.substring(1));
+                if (hashParams.has('user_id')) return hashParams.get('user_id');
+            }
+            const regex = /user_id=([a-fA-F0-9]{24})/;
+            const match = window.location.href.match(regex);
+            if (match && match[1]) return match[1];
+            return null;
+        }
+
+        async function fetchUserData() {
+            const userId = getUserId();
+            const errorEl = document.getElementById('error-msg');
+            const debugText = document.getElementById('debug-text');
+
+            if (!userId) return; 
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/?user_id=${userId}`, {
+                    method: 'GET',
+                    credentials: 'omit',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                if (!response.ok) throw new Error(`${response.status}`);
+
+                const data = await response.json();
+
+                document.getElementById('disp-rank').textContent = data.rank;
+                document.getElementById('disp-total').textContent = data.total_diamonds.toLocaleString();
+                
+                document.getElementById('disp-gift').textContent = data.breakdown.livestream_gift.toLocaleString();
+                document.getElementById('disp-ticket').textContent = data.breakdown.show_ticket.toLocaleString();
+                document.getElementById('disp-command').textContent = data.breakdown.command.toLocaleString();
+                document.getElementById('disp-lovense').textContent = data.breakdown.lovense.toLocaleString();
+
+            } catch (err) {
+                console.error(err);
+                errorEl.classList.remove('hidden');
+                debugText.textContent = `(ID: ${userId})`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setLang('tc');
+            fetchUserData();
+        });
+    </script>
 </body>
 </html>
