@@ -11,19 +11,14 @@
         :root {
             --bg-deep: #050505;
             --bg-panel: #141416;
-            
             --accent: #00d2be;
-            
             --gold-start: #bf953f;
             --gold-mid: #fcf6ba;
             --gold-end: #b38728;
-            
             --text-main: #ffffff;
             --text-sub: #d0d0d0;
             --border-color: rgba(255, 255, 255, 0.15);
-
             --row-height: 42px;
-            
             --font-stack: 'Roboto', 'Noto Sans TC', sans-serif;
         }
 
@@ -50,16 +45,11 @@
             z-index: 2;
         }
 
-        /* --- Diamond Styling & Alignment --- */
+        /* --- Diamond Styling --- */
         .d-emoji {
             font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             display: inline-block;
             line-height: 1;
-            transform: translateZ(0); 
-            -webkit-text-fill-color: initial; 
-            text-shadow: none;
-            
-            /* 間距與對齊 */
             margin-left: 6px;
             position: relative;
             top: -0.12em; 
@@ -73,7 +63,6 @@
             filter: sepia(100%) saturate(1000%) hue-rotate(10deg) brightness(1.2) contrast(1.1) drop-shadow(0 0 8px rgba(252, 246, 186, 0.6));
         }
 
-        /* 尺寸設定 */
         .d-label-icon { font-size: 0.75em; } 
         
         .d-hero { 
@@ -83,7 +72,7 @@
             top: 0;
         }
 
-        /* --- Language Switcher --- */
+        /* --- Components --- */
         .lang-switch {
             display: flex;
             justify-content: flex-end;
@@ -109,7 +98,6 @@
             font-weight: 700;
         }
 
-        /* --- Hero Section --- */
         .hero {
             text-align: center;
             margin-bottom: 35px;
@@ -135,13 +123,7 @@
             white-space: nowrap;
         }
 
-        @media (max-width: 480px) {
-            h1 { font-size: 2.2rem; white-space: normal; }
-        }
-
-        .marketing-box {
-            margin-bottom: 20px;
-        }
+        .marketing-box { margin-bottom: 20px; }
 
         .campaign-tag {
             display: inline-block;
@@ -162,11 +144,6 @@
             font-weight: 500;
             line-height: 1.8;
             color: #eee;
-        }
-
-        @media (max-width: 480px) {
-            .campaign-highlight { font-size: 1rem; }
-            .campaign-tag { font-size: 0.9rem; padding: 4px 15px; }
         }
 
         .gold-row {
@@ -199,10 +176,6 @@
             box-shadow: 0 0 20px rgba(0, 210, 190, 0.3);
             transition: all 0.2s;
             margin-top: 2px;
-            letter-spacing: 0.5px;
-            -webkit-font-smoothing: subpixel-antialiased;
-            text-shadow: none;
-            white-space: nowrap;
         }
 
         .cta-btn:hover {
@@ -211,9 +184,8 @@
             background: #fff;
         }
 
-        /* --- Dashboard (Fixed Equal Height) --- */
+        /* --- Dashboard --- */
         .dashboard {
-            /* 改用 Grid 佈局以強制等高 */
             display: grid;
             grid-template-columns: 1fr 1fr; 
             gap: 15px;
@@ -230,7 +202,6 @@
             padding: 15px;
             position: relative;
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            /* 讓卡片本身成為 Flex 容器，以便控制內部內容分佈 */
             display: flex;
             flex-direction: column;
         }
@@ -242,20 +213,10 @@
             background: linear-gradient(90deg, transparent, var(--accent), transparent);
         }
 
-        /* Left Card: 內容均勻分佈 */
-        .dash-left {
-            justify-content: space-evenly; 
-        }
-        
-        /* Right Card: 內容置中 */
-        .dash-right {
-            justify-content: center;
-        }
+        .dash-left { justify-content: space-evenly; }
+        .dash-right { justify-content: center; }
 
-        .stats-block {
-            text-align: center;
-            width: 100%;
-        }
+        .stats-block { text-align: center; width: 100%; }
 
         .stats-label-group {
             display: flex;
@@ -301,44 +262,28 @@
             margin: 13px auto;
         }
 
-        /* Right Card */
         .detail-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             height: 44px;
-            padding: 0;
             border-bottom: 1px solid rgba(255,255,255,0.08);
         }
         .detail-row:last-child { border-bottom: none; }
         
-        .d-label-group {
-            display: flex;
-            align-items: center;
-            line-height: 1;
-        }
-
-        .d-label { 
-            color: var(--text-sub); 
-            font-size: 0.9rem; 
-            font-weight: 500;
-        }
-        
+        .d-label-group { display: flex; align-items: center; }
+        .d-label { color: var(--text-sub); font-size: 0.9rem; font-weight: 500; }
         .d-val { 
             color: #fff; 
             font-weight: 700; 
             font-size: clamp(1rem, 4vw, 1.2rem);
             font-family: 'Roboto', sans-serif; 
-            justify-content: flex-end; 
-            display: flex;
-            align-items: center; 
         }
 
-        /* --- Split Layout --- */
+        /* --- Leaderboard --- */
         .split-header {
             display: grid;
             grid-template-columns: 1.4fr 1fr;
-            margin-bottom: 0;
         }
         
         .header-content {
@@ -368,8 +313,7 @@
 
         @media (max-width: 768px) {
             .split-header, .split-body { grid-template-columns: 1.3fr 1fr; }
-            .col-header { margin-top: 0; border-left: 0; border-top: 3px solid var(--accent); text-align: center; font-size: 0.9rem; padding: 10px 5px;}
-            .header-content { flex-wrap: wrap; justify-content: center; }
+            .col-header { font-size: 0.9rem; padding: 10px 5px;}
         }
 
         .align-row {
@@ -379,10 +323,6 @@
             padding: 0 15px;
             border-bottom: 1px solid var(--border-color);
             font-size: 1rem;
-        }
-
-        @media (max-width: 480px) {
-            .align-row { padding: 0 10px; font-size: 0.9rem; }
         }
         
         .align-row:last-child { border-bottom: none; }
@@ -395,8 +335,6 @@
             color: #fff; 
             font-weight: 700; 
             font-family: 'Roboto', sans-serif;
-            display: flex;
-            align-items: center;
         }
         
         .rank-1 { color: var(--gold-mid); text-shadow: 0 0 10px rgba(255, 215, 0, 0.4); font-size: 1.3rem; }
@@ -411,10 +349,8 @@
             color: var(--accent); 
             font-weight: 700; 
             font-family: 'Roboto', sans-serif; 
-            letter-spacing: 0.5px;
         }
 
-        /* --- Rules --- */
         .rules-section {
             margin-top: 20px;
             padding: 20px;
@@ -423,10 +359,7 @@
             color: #ccc;
         }
         .rules-title { font-weight: 700; color: #fff; margin-bottom: 15px; font-size: 1.1rem; border-left: 3px solid var(--accent); padding-left: 10px;}
-        .rules-list {
-            list-style: none;
-            padding-left: 0;
-        }
+        .rules-list { list-style: none; padding-left: 0; }
         .rules-list li {
             margin-bottom: 6px;
             line-height: 1.5;
@@ -434,12 +367,10 @@
             padding-left: 20px;
             position: relative;
         }
-        /* 綠色圓點 */
         .rules-list li::before {
             content: '•';
             position: absolute;
-            left: 0;
-            top: 0;
+            left: 0; top: 0;
             color: var(--accent);
             font-size: 1.5rem;
             line-height: 1.3rem;
@@ -454,13 +385,34 @@
             border: 1px solid rgba(255, 50, 50, 0.3);
             border-radius: 8px;
         }
-        .hidden { display: none; }
+        
+        .loading-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(2px);
+            border-radius: 8px;
+        }
+        .spinner {
+            width: 30px; height: 30px;
+            border: 3px solid var(--accent);
+            border-top: 3px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .hidden { display: none !important; }
+        .val-blur { filter: blur(4px); opacity: 0.6; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- Language -->
         <div class="lang-switch">
             <button class="lang-btn active" onclick="setLang('tc')">繁體</button>
             <button class="lang-btn" onclick="setLang('sc')">简体</button>
@@ -468,108 +420,88 @@
             <button class="lang-btn" onclick="setLang('jp')">日本語</button>
         </div>
 
-        <!-- Hero -->
         <div class="hero">
             <div class="date-badge" data-i18n="date">12/12 - 12/17</div>
             <h1 data-i18n="title">雙 12 直播狂歡</h1>
-            
             <div class="marketing-box">
                 <div class="campaign-tag" data-i18n="subtitle">直播耗鑽排行榜</div>
                 <div class="campaign-highlight">
                     <span data-i18n="desc_prefix">應援人氣女神奪大獎，前十名瓜分總計</span><br>
-                    
                     <div class="gold-row">
-                        <!-- 金色鑽石放在左邊，垂直置中 -->
                         <span class="d-emoji d-hero d-gold-real">💎</span>
                         <span class="gold-text">550,000</span>
                     </div>
                 </div>
             </div>
-            
             <div>
                 <a href="https://creators.swag.live/d12d" class="cta-btn" data-i18n="cta">查看人氣女神活動</a>
             </div>
         </div>
 
-        <!-- Error Msg -->
         <div id="error-msg" class="error-msg hidden">
             <span data-i18n="error_desc">讀取失敗</span> <span id="debug-text" style="font-size:0.8em; opacity: 0.8;"></span>
         </div>
 
-        <!-- Dashboard (Fixed Equal Height with Grid) -->
-        <div id="stats-content" class="dashboard">
-            <!-- Left Card: Rank & Total -->
+        <!-- Dashboard -->
+        <div id="dashboard-container" class="dashboard" style="position: relative;">
+            <!-- Loading Overlay -->
+            <div id="loading-dash" class="loading-overlay hidden">
+                <div class="spinner"></div>
+            </div>
+
+            <!-- Left: Rank & Total -->
             <div class="dash-card dash-left">
-                <!-- Rank Block -->
                 <div class="stats-block">
                     <div class="stats-label" data-i18n="current_rank">當前排名</div>
                     <div class="stats-val rank-text" id="disp-rank">--</div>
                 </div>
-                
                 <div class="divider"></div>
-
-                <!-- Total Block -->
                 <div class="stats-block">
-                    <!-- 鑽石移至標題右側，垂直置中 -->
                     <div class="stats-label-group">
                         <span class="stats-label" data-i18n="total_spent">總消費</span>
                         <span class="d-emoji d-label-icon d-cyan">💎</span>
                     </div>
-                    <!-- 數字 (確保置中) -->
                     <div class="stats-val total-text">
                         <span id="disp-total">0</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Right Card: Details -->
+            <!-- Right: Details -->
             <div class="dash-card dash-right">
-                <!-- 直播禮物 -->
                 <div class="detail-row">
                     <div class="d-label-group">
                         <span class="d-label" data-i18n="breakdown_gift">直播禮物</span>
                         <span class="d-emoji d-label-icon d-cyan">💎</span>
                     </div>
-                    <div class="d-val">
-                        <span id="disp-gift">0</span>
-                    </div>
+                    <div class="d-val"><span id="disp-gift">0</span></div>
                 </div>
-                <!-- 限時表演 -->
                 <div class="detail-row">
                     <div class="d-label-group">
                         <span class="d-label" data-i18n="breakdown_ticket">限時表演</span>
                         <span class="d-emoji d-label-icon d-cyan">💎</span>
                     </div>
-                    <div class="d-val">
-                        <span id="disp-ticket">0</span>
-                    </div>
+                    <div class="d-val"><span id="disp-ticket">0</span></div>
                 </div>
-                <!-- 挑逗表演 -->
                 <div class="detail-row">
                     <div class="d-label-group">
                         <span class="d-label" data-i18n="breakdown_menu">挑逗表演</span>
                         <span class="d-emoji d-label-icon d-cyan">💎</span>
                     </div>
-                    <div class="d-val">
-                        <span id="disp-command">0</span>
-                    </div>
+                    <div class="d-val"><span id="disp-command">0</span></div>
                 </div>
-                <!-- 震動控制 -->
                 <div class="detail-row">
                     <div class="d-label-group">
                         <span class="d-label" data-i18n="breakdown_lovense">震動控制</span>
                         <span class="d-emoji d-label-icon d-cyan">💎</span>
                     </div>
-                    <div class="d-val">
-                        <span id="disp-lovense">0</span>
-                    </div>
+                    <div class="d-val"><span id="disp-lovense">0</span></div>
                 </div>
             </div>
         </div>
 
-        <!-- Aligned Leaderboard & Rewards -->
+        <!-- Leaderboard -->
         <div class="split-header">
-            <!-- 標題加入鑽石，垂直置中 -->
             <div class="col-header">
                 <div class="header-content">
                     <span data-i18n="lb_title">總鑽排行榜</span>
@@ -584,15 +516,8 @@
             </div>
         </div>
         <div class="split-body">
-            <!-- Left: Leaderboard -->
-            <div class="lb-col" id="leaderboard-body">
-                <!-- JS Generated -->
-            </div>
-
-            <!-- Right: Rewards -->
-            <div class="reward-col" id="rewards-body">
-                <!-- JS Generated -->
-            </div>
+            <div class="lb-col" id="leaderboard-body"></div>
+            <div class="reward-col" id="rewards-body"></div>
         </div>
 
         <!-- Rules -->
@@ -603,9 +528,8 @@
     </div>
 
     <script>
-        const API_BASE_URL = "https://swag-campaign-api-905468082258.asia-east1.run.app"; 
-        
-        const DIAMOND_HTML = '<span class="d-emoji d-sm d-cyan">💎</span>';
+        // Integration Logic: API URL
+        const API_BASE_URL = "https://campaign-api-905468082258.asia-east1.run.app"; 
 
         const TRANSLATIONS = {
             tc: {
@@ -706,22 +630,23 @@
             }
         };
 
+        // Fallback Data if API fails or for initial state
         const MOCK_LEADERBOARD = [
-            { rank: 1, score: 917274 },
-            { rank: 2, score: 816167 },
-            { rank: 3, score: 591688 },
-            { rank: 4, score: 568800 },
-            { rank: 5, score: 532795 },
-            { rank: 6, score: 499997 },
-            { rank: 7, score: 482676 },
-            { rank: 8, score: 427947 },
-            { rank: 9, score: 397675 },
-            { rank: 10, score: 389995 }
+            { rank: 1, user_id: '...', total_diamond_cost: 0 },
+            { rank: 2, user_id: '...', total_diamond_cost: 0 },
+            { rank: 3, user_id: '...', total_diamond_cost: 0 },
+            { rank: 4, user_id: '...', total_diamond_cost: 0 },
+            { rank: 5, user_id: '...', total_diamond_cost: 0 },
+            { rank: 6, user_id: '...', total_diamond_cost: 0 },
+            { rank: 7, user_id: '...', total_diamond_cost: 0 },
+            { rank: 8, user_id: '...', total_diamond_cost: 0 },
+            { rank: 9, user_id: '...', total_diamond_cost: 0 },
+            { rank: 10, user_id: '...', total_diamond_cost: 0 }
         ];
 
-        const REWARDS = [
-            100000, 90000, 80000, 70000, 60000, 50000, 40000, 30000, 20000, 10000
-        ];
+        const REWARDS = [100000, 90000, 80000, 70000, 60000, 50000, 40000, 30000, 20000, 10000];
+
+        let currentLeaderboard = [...MOCK_LEADERBOARD];
 
         function setLang(lang) {
             document.querySelectorAll('.lang-btn').forEach(btn => {
@@ -737,7 +662,6 @@
             });
 
             const t = TRANSLATIONS[lang];
-
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (t[key]) el.innerHTML = t[key];
@@ -750,15 +674,14 @@
                 li.textContent = rule;
                 rulesContainer.appendChild(li);
             });
-
-            renderAlignedLists();
         }
 
-        function renderAlignedLists() {
-            // Render Leaderboard (Left)
+        // Render Leaderboard & Rewards
+        function renderTables() {
             const lbBody = document.getElementById('leaderboard-body');
             lbBody.innerHTML = '';
-            MOCK_LEADERBOARD.forEach(item => {
+            
+            currentLeaderboard.forEach(item => {
                 let rankClass = '';
                 if(item.rank === 1) rankClass = 'rank-1';
                 else if(item.rank === 2) rankClass = 'rank-2';
@@ -766,36 +689,53 @@
 
                 const div = document.createElement('div');
                 div.className = 'align-row';
+                // Handle missing data (0 diamonds) visually with blur/dim if needed, or just 0
+                const scoreText = item.total_diamond_cost > 0 ? item.total_diamond_cost.toLocaleString() : '-';
+                
                 div.innerHTML = `
                     <span class="lb-rank ${rankClass}">${item.rank}</span>
-                    <span class="lb-score val-wrapper">${item.score.toLocaleString()}</span>
+                    <span class="lb-score">${scoreText}</span>
                 `;
                 lbBody.appendChild(div);
             });
 
-            // Render Rewards (Right)
             const rewardsBody = document.getElementById('rewards-body');
             rewardsBody.innerHTML = '';
             REWARDS.forEach((val) => {
                 const div = document.createElement('div');
                 div.className = 'align-row';
-                div.innerHTML = `
-                    <div class="r-val val-wrapper">${val.toLocaleString()}</div>
-                `;
+                div.innerHTML = `<div class="r-val">${val.toLocaleString()}</div>`;
                 rewardsBody.appendChild(div);
             });
         }
 
+        // Integration Logic: User ID Parsing
         function getUserId() {
+            // 1. Query Param (?user_id=)
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.has('user_id')) return urlParams.get('user_id');
+
+            // 2. Hash Param (#user_id= or #/route?user_id=)
             if (window.location.hash) {
-                const hashParams = new URLSearchParams(window.location.hash.substring(1));
+                // Try parsing entire hash as params first
+                const hashContent = window.location.hash.substring(1); // remove #
+                const hashParams = new URLSearchParams(hashContent);
                 if (hashParams.has('user_id')) return hashParams.get('user_id');
+                
+                // Try finding ? inside hash
+                const splitHash = hashContent.split('?');
+                if (splitHash.length > 1) {
+                    const innerParams = new URLSearchParams(splitHash[1]);
+                    if (innerParams.has('user_id')) return innerParams.get('user_id');
+                }
             }
-            const regex = /user_id=([a-fA-F0-9]{24})/;
+
+            // 3. Regex Fallback (Brute force search in whole URL string for typical MongoID pattern)
+            // Matches 24 hex characters preceded by user_id=
+            const regex = /[?&#]user_id=([a-fA-F0-9]{24})/;
             const match = window.location.href.match(regex);
             if (match && match[1]) return match[1];
+
             return null;
         }
 
@@ -803,37 +743,91 @@
             const userId = getUserId();
             const errorEl = document.getElementById('error-msg');
             const debugText = document.getElementById('debug-text');
+            const loader = document.getElementById('loading-dash');
+            
+            // If user ID exists, show loading on dashboard
+            if (userId) loader.classList.remove('hidden');
 
-            if (!userId) return; 
+            // Default dashboard values
+            const resetDashboard = () => {
+                document.getElementById('disp-rank').textContent = '--';
+                document.getElementById('disp-total').textContent = '0';
+                ['gift', 'ticket', 'command', 'lovense'].forEach(id => {
+                    document.getElementById(`disp-${id}`).textContent = '0';
+                });
+            };
 
             try {
-                const response = await fetch(`${API_BASE_URL}/?user_id=${userId}`, {
+                // Construct URL
+                // If userId is null, we can still fetch leaderboard if endpoint supports it without param,
+                // but requirements say "GET /?user_id=xxx". 
+                // We will attempt to fetch with a dummy or empty if strict, but let's assume we need an ID for user stats.
+                // However, likely we want to see leaderboard even if not logged in. 
+                // NOTE: The prompt implies the API returns specific data structure. 
+                
+                let fetchUrl = API_BASE_URL;
+                if (userId) {
+                    fetchUrl += `/?user_id=${userId}`;
+                } else {
+                    // Try to fetch a known existing ID or just root to get leaderboard if API allows?
+                    // Based on prompt "When API receives GET /?user_id=xxx", it implies logic runs then.
+                    // We will skip user fetch if no ID, but we still need leaderboard.
+                    // For this specific integration, let's assume we only call if we have an ID, 
+                    // OR we try to call with a dummy to get leaderboard if the API supports partial response.
+                    // If not, we just render mock leaderboard.
+                    renderTables(); // Render defaults
+                    return; 
+                }
+
+                // Fetch Options: credentials: 'omit'
+                const response = await fetch(fetchUrl, {
                     method: 'GET',
-                    credentials: 'omit',
+                    credentials: 'omit', 
                     headers: { 'Content-Type': 'application/json' }
                 });
 
-                if (!response.ok) throw new Error(`${response.status}`);
+                if (!response.ok) throw new Error(`API Error: ${response.status}`);
 
                 const data = await response.json();
 
-                document.getElementById('disp-rank').textContent = data.rank;
-                document.getElementById('disp-total').textContent = data.total_diamonds.toLocaleString();
-                
-                document.getElementById('disp-gift').textContent = data.breakdown.livestream_gift.toLocaleString();
-                document.getElementById('disp-ticket').textContent = data.breakdown.show_ticket.toLocaleString();
-                document.getElementById('disp-command').textContent = data.breakdown.command.toLocaleString();
-                document.getElementById('disp-lovense').textContent = data.breakdown.lovense.toLocaleString();
+                // 1. Update User Stats
+                if (data.user_stats) {
+                    document.getElementById('disp-rank').textContent = data.user_stats.rank;
+                    document.getElementById('disp-total').textContent = (data.user_stats.total_diamond_cost || 0).toLocaleString();
+                    
+                    if (data.user_stats.breakdown) {
+                        const bd = data.user_stats.breakdown;
+                        document.getElementById('disp-gift').textContent = (bd.livestream_gift_diamonds || 0).toLocaleString();
+                        document.getElementById('disp-ticket').textContent = (bd.show_ticket_diamonds || 0).toLocaleString();
+                        document.getElementById('disp-command').textContent = (bd.command_diamonds || 0).toLocaleString();
+                        document.getElementById('disp-lovense').textContent = (bd.lovense_diamonds || 0).toLocaleString();
+                    }
+                } else {
+                    resetDashboard();
+                }
+
+                // 2. Update Leaderboard
+                if (data.leaderboard_top_10 && Array.isArray(data.leaderboard_top_10) && data.leaderboard_top_10.length > 0) {
+                    currentLeaderboard = data.leaderboard_top_10;
+                    renderTables(); // Re-render with real data
+                }
 
             } catch (err) {
-                console.error(err);
-                errorEl.classList.remove('hidden');
-                debugText.textContent = `(ID: ${userId})`;
+                console.error("Fetch error:", err);
+                if (userId) {
+                    errorEl.classList.remove('hidden');
+                    debugText.textContent = `(ID: ${userId})`;
+                }
+                resetDashboard();
+                renderTables(); // Ensure table renders even on error
+            } finally {
+                loader.classList.add('hidden');
             }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             setLang('tc');
+            renderTables(); // Initial render with mock data
             fetchUserData();
         });
     </script>
