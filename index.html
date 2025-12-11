@@ -50,42 +50,38 @@
             z-index: 2;
         }
 
-        /* --- Diamond Styling --- */
-        .val-wrapper {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 1;
-        }
-
+        /* --- Diamond Styling & Alignment --- */
         .d-emoji {
             font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-            margin-left: 6px;
+            display: inline-block;
             line-height: 1;
             transform: translateZ(0); 
-            display: inline-block;
-            vertical-align: baseline;
             -webkit-text-fill-color: initial; 
             text-shadow: none;
+            
+            /* 間距與對齊 */
+            margin-left: 6px;
+            position: relative;
+            top: -0.12em; 
         }
 
         .d-cyan {
             filter: sepia(100%) hue-rotate(125deg) saturate(350%) brightness(1.1) drop-shadow(0 0 5px rgba(0, 210, 190, 0.4));
         }
 
-        .d-gold {
-            filter: brightness(0) saturate(100%) invert(83%) sepia(28%) saturate(1063%) hue-rotate(350deg) brightness(102%) contrast(104%) drop-shadow(0 0 8px rgba(252, 246, 186, 0.6));
+        .d-gold-real {
+            filter: sepia(100%) saturate(1000%) hue-rotate(10deg) brightness(1.2) contrast(1.1) drop-shadow(0 0 8px rgba(252, 246, 186, 0.6));
         }
 
         /* 尺寸設定 */
-        .d-sm { font-size: 0.9em; position: relative; top: -1px; } 
-        .d-md { font-size: 0.85em; position: relative; top: -1px; } 
+        .d-label-icon { font-size: 0.75em; } 
         
-        /* 總消費用：縮小 */
-        .d-lg { font-size: 0.65em; margin-left: 8px; position: relative; top: -2px; } 
-        
-        /* Hero 用：放大 */
-        .d-xl { font-size: 1.1em; margin-left: 10px; position: relative; top: -1px; }
+        .d-hero { 
+            font-size: 0.9em; 
+            margin-right: 12px;
+            margin-left: 0;
+            top: 0;
+        }
 
         /* --- Language Switcher --- */
         .lang-switch {
@@ -116,7 +112,7 @@
         /* --- Hero Section --- */
         .hero {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 35px;
         }
 
         .date-badge {
@@ -140,14 +136,11 @@
         }
 
         @media (max-width: 480px) {
-            h1 {
-                font-size: 2.2rem;
-                white-space: normal;
-            }
+            h1 { font-size: 2.2rem; white-space: normal; }
         }
 
         .marketing-box {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .campaign-tag {
@@ -160,7 +153,7 @@
             font-size: 1rem;
             font-weight: 700;
             letter-spacing: 2px;
-            margin-bottom: 25px; /* 增加間距 (原 10px) */
+            margin-bottom: 12px;
             text-transform: uppercase;
         }
 
@@ -191,6 +184,7 @@
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 20px rgba(252, 246, 186, 0.2);
             white-space: nowrap;
+            line-height: 1;
         }
 
         .cta-btn {
@@ -198,14 +192,16 @@
             background: var(--accent);
             color: #000;
             font-size: 1.1rem;
-            font-weight: 900;
+            font-weight: 700;
             padding: 12px 40px;
             border-radius: 50px;
             text-decoration: none;
             box-shadow: 0 0 20px rgba(0, 210, 190, 0.3);
             transition: all 0.2s;
-            margin-top: 5px;
-            -webkit-font-smoothing: antialiased;
+            margin-top: 10px;
+            letter-spacing: 0.5px;
+            -webkit-font-smoothing: subpixel-antialiased;
+            text-shadow: none;
             white-space: nowrap;
         }
 
@@ -215,22 +211,28 @@
             background: #fff;
         }
 
-        /* --- Dashboard --- */
+        /* --- Dashboard (Fixed Equal Height) --- */
         .dashboard {
-            display: flex;
-            flex-wrap: wrap;
+            /* 改用 Grid 佈局以強制等高 */
+            display: grid;
+            grid-template-columns: 1fr 1fr; 
             gap: 15px;
             margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .dashboard { grid-template-columns: 1fr; }
         }
 
         .dash-card {
             background: var(--bg-panel);
             border: 1px solid var(--border-color);
             padding: 15px;
-            flex: 1;
-            min-width: 300px;
             position: relative;
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            /* 讓卡片本身成為 Flex 容器，以便控制內部內容分佈 */
+            display: flex;
+            flex-direction: column;
         }
         
         .dash-card::before {
@@ -240,12 +242,14 @@
             background: linear-gradient(90deg, transparent, var(--accent), transparent);
         }
 
-        /* Left Card */
+        /* Left Card: 內容均勻分佈 */
         .dash-left {
-            display: flex;
-            flex-direction: column;
+            justify-content: space-evenly; 
+        }
+        
+        /* Right Card: 內容置中 */
+        .dash-right {
             justify-content: center;
-            gap: 5px;
         }
 
         .stats-block {
@@ -253,22 +257,31 @@
             width: 100%;
         }
 
+        .stats-label-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2px;
+            line-height: 1;
+        }
+
         .stats-label {
             color: var(--text-sub);
             font-size: 0.9rem;
-            margin-bottom: 2px;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 500;
         }
 
         .stats-val {
-            line-height: 1.1;
+            line-height: 1;
             font-weight: 900;
             color: #fff;
             text-shadow: 0 5px 15px rgba(0,0,0,0.5);
             font-family: 'Roboto', sans-serif;
             justify-content: center;
+            display: flex;
+            align-items: center;
         }
 
         .stats-val.rank-text { 
@@ -299,6 +312,12 @@
         }
         .detail-row:last-child { border-bottom: none; }
         
+        .d-label-group {
+            display: flex;
+            align-items: center;
+            line-height: 1;
+        }
+
         .d-label { 
             color: var(--text-sub); 
             font-size: 0.9rem; 
@@ -311,16 +330,23 @@
             font-size: clamp(1rem, 4vw, 1.2rem);
             font-family: 'Roboto', sans-serif; 
             justify-content: flex-end; 
+            display: flex;
+            align-items: center; 
         }
 
-        /* --- Split Layout (Modified Ratio) --- */
+        /* --- Split Layout --- */
         .split-header {
             display: grid;
-            /* 左欄寬，右欄窄 */
             grid-template-columns: 1.4fr 1fr;
             margin-bottom: 0;
         }
         
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .col-header {
             background: #1a1a1d;
             padding: 12px;
@@ -334,7 +360,6 @@
 
         .split-body {
             display: grid;
-            /* 左欄寬，右欄窄 */
             grid-template-columns: 1.4fr 1fr;
             background: var(--bg-panel);
             border: 1px solid var(--border-color);
@@ -342,9 +367,9 @@
         }
 
         @media (max-width: 768px) {
-            /* 手機版稍微調整比例，避免右邊太擠，但保持左寬右窄 */
             .split-header, .split-body { grid-template-columns: 1.3fr 1fr; }
             .col-header { margin-top: 0; border-left: 0; border-top: 3px solid var(--accent); text-align: center; font-size: 0.9rem; padding: 10px 5px;}
+            .header-content { flex-wrap: wrap; justify-content: center; }
         }
 
         .align-row {
@@ -454,15 +479,15 @@
                     <span data-i18n="desc_prefix">應援人氣女神奪大獎，前十名瓜分總計</span><br>
                     
                     <div class="gold-row">
+                        <!-- 金色鑽石放在左邊，垂直置中 -->
+                        <span class="d-emoji d-hero d-gold-real">💎</span>
                         <span class="gold-text">550,000</span>
-                        <!-- 放大並對齊的金色鑽石 -->
-                        <span class="d-emoji d-xl d-gold">💎</span>
                     </div>
                 </div>
             </div>
             
             <div>
-                <a href="#" class="cta-btn" data-i18n="cta">查看人氣女神活動</a>
+                <a href="https://creators.swag.live/d12d" class="cta-btn" data-i18n="cta">查看人氣女神活動</a>
             </div>
         </div>
 
@@ -471,7 +496,7 @@
             <span data-i18n="error_desc">讀取失敗</span> <span id="debug-text" style="font-size:0.8em; opacity: 0.8;"></span>
         </div>
 
-        <!-- Dashboard (Symmetrical & Compact) -->
+        <!-- Dashboard (Fixed Equal Height with Grid) -->
         <div id="stats-content" class="dashboard">
             <!-- Left Card: Rank & Total -->
             <div class="dash-card dash-left">
@@ -485,43 +510,58 @@
 
                 <!-- Total Block -->
                 <div class="stats-block">
-                    <div class="stats-label" data-i18n="total_spent">總消費</div>
-                    <div class="stats-val total-text val-wrapper">
+                    <!-- 鑽石移至標題右側，垂直置中 -->
+                    <div class="stats-label-group">
+                        <span class="stats-label" data-i18n="total_spent">總消費</span>
+                        <span class="d-emoji d-label-icon d-cyan">💎</span>
+                    </div>
+                    <!-- 數字 (確保置中) -->
+                    <div class="stats-val total-text">
                         <span id="disp-total">0</span>
-                        <!-- 縮小後的青色鑽石 -->
-                        <span class="d-emoji d-lg d-cyan">💎</span>
                     </div>
                 </div>
             </div>
 
             <!-- Right Card: Details -->
             <div class="dash-card dash-right">
+                <!-- 直播禮物 -->
                 <div class="detail-row">
-                    <span class="d-label" data-i18n="breakdown_gift">直播禮物</span>
-                    <div class="d-val val-wrapper">
+                    <div class="d-label-group">
+                        <span class="d-label" data-i18n="breakdown_gift">直播禮物</span>
+                        <span class="d-emoji d-label-icon d-cyan">💎</span>
+                    </div>
+                    <div class="d-val">
                         <span id="disp-gift">0</span>
-                        <span class="d-emoji d-md d-cyan">💎</span>
                     </div>
                 </div>
+                <!-- 限時表演 -->
                 <div class="detail-row">
-                    <span class="d-label" data-i18n="breakdown_ticket">限時表演</span>
-                    <div class="d-val val-wrapper">
+                    <div class="d-label-group">
+                        <span class="d-label" data-i18n="breakdown_ticket">限時表演</span>
+                        <span class="d-emoji d-label-icon d-cyan">💎</span>
+                    </div>
+                    <div class="d-val">
                         <span id="disp-ticket">0</span>
-                        <span class="d-emoji d-md d-cyan">💎</span>
                     </div>
                 </div>
+                <!-- 挑逗表演 -->
                 <div class="detail-row">
-                    <span class="d-label" data-i18n="breakdown_menu">挑逗表演</span>
-                    <div class="d-val val-wrapper">
+                    <div class="d-label-group">
+                        <span class="d-label" data-i18n="breakdown_menu">挑逗表演</span>
+                        <span class="d-emoji d-label-icon d-cyan">💎</span>
+                    </div>
+                    <div class="d-val">
                         <span id="disp-command">0</span>
-                        <span class="d-emoji d-md d-cyan">💎</span>
                     </div>
                 </div>
+                <!-- 震動控制 -->
                 <div class="detail-row">
-                    <span class="d-label" data-i18n="breakdown_lovense">震動控制</span>
-                    <div class="d-val val-wrapper">
+                    <div class="d-label-group">
+                        <span class="d-label" data-i18n="breakdown_lovense">震動控制</span>
+                        <span class="d-emoji d-label-icon d-cyan">💎</span>
+                    </div>
+                    <div class="d-val">
                         <span id="disp-lovense">0</span>
-                        <span class="d-emoji d-md d-cyan">💎</span>
                     </div>
                 </div>
             </div>
@@ -529,8 +569,19 @@
 
         <!-- Aligned Leaderboard & Rewards -->
         <div class="split-header">
-            <div class="col-header" data-i18n="lb_title">總鑽排行榜</div>
-            <div class="col-header" data-i18n="rewards_title">排名獎勵</div>
+            <!-- 標題加入鑽石，垂直置中 -->
+            <div class="col-header">
+                <div class="header-content">
+                    <span data-i18n="lb_title">總鑽排行榜</span>
+                    <span class="d-emoji d-label-icon d-cyan">💎</span>
+                </div>
+            </div>
+            <div class="col-header">
+                <div class="header-content">
+                    <span data-i18n="rewards_title">排名獎勵</span>
+                    <span class="d-emoji d-label-icon d-cyan">💎</span>
+                </div>
+            </div>
         </div>
         <div class="split-body">
             <!-- Left: Leaderboard -->
@@ -717,7 +768,7 @@
                 div.className = 'align-row';
                 div.innerHTML = `
                     <span class="lb-rank ${rankClass}">${item.rank}</span>
-                    <span class="lb-score val-wrapper">${item.score.toLocaleString()} ${DIAMOND_HTML}</span>
+                    <span class="lb-score val-wrapper">${item.score.toLocaleString()}</span>
                 `;
                 lbBody.appendChild(div);
             });
@@ -729,7 +780,7 @@
                 const div = document.createElement('div');
                 div.className = 'align-row';
                 div.innerHTML = `
-                    <div class="r-val val-wrapper">${val.toLocaleString()} ${DIAMOND_HTML}</div>
+                    <div class="r-val val-wrapper">${val.toLocaleString()}</div>
                 `;
                 rewardsBody.appendChild(div);
             });
