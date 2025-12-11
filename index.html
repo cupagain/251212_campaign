@@ -376,14 +376,37 @@
             line-height: 1.3rem;
         }
 
+        /* Error Message Styling */
         .error-msg {
             text-align: center;
-            padding: 10px;
-            background: rgba(255, 50, 50, 0.15);
+            padding: 30px 20px;
+            background: rgba(255, 50, 50, 0.08);
+            color: var(--text-sub);
+            margin-bottom: 30px;
+            border: 1px dashed rgba(255, 50, 50, 0.3);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .error-msg h3 {
             color: #ff8080;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255, 50, 50, 0.3);
-            border-radius: 8px;
+            font-size: 1.2rem;
+            margin: 0;
+        }
+        
+        .error-msg p {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .error-debug {
+            font-size: 0.8rem;
+            color: #777;
+            margin-top: 5px;
+            font-family: monospace;
         }
         
         .loading-overlay {
@@ -438,8 +461,9 @@
             </div>
         </div>
 
+        <!-- Error Message Container (Initially Hidden) -->
         <div id="error-msg" class="error-msg hidden">
-            <span data-i18n="error_desc">讀取失敗</span>
+            <!-- Dynamic Content -->
         </div>
 
         <!-- Dashboard -->
@@ -529,7 +553,11 @@
 
     <script>
         // Integration Logic: API URL
+        // 修正：移除結尾斜線，確保與 Query String 拼接正確
         const API_BASE_URL = "https://campaign-api-905468082258.asia-east1.run.app"; 
+
+        let currentLang = 'tc';
+        let currentErrorState = null; 
 
         const TRANSLATIONS = {
             tc: {
@@ -540,7 +568,6 @@
                 cta: "查看人氣女神活動",
                 current_rank: "當前排名",
                 total_spent: "總消費",
-                error_desc: "讀取失敗，請確認已登入。",
                 lb_title: "總鑽排行榜",
                 rewards_title: "排名獎勵",
                 breakdown_gift: "直播禮物",
@@ -548,6 +575,12 @@
                 breakdown_menu: "挑逗表演",
                 breakdown_lovense: "震動控制",
                 rules_title: "活動說明",
+                // Error Messages
+                err_missing_title: '⚠️ 缺少用戶資訊', 
+                err_missing_desc: '請登入 SWAG 後再使用本頁面。',
+                err_conn_title: '連線錯誤', 
+                err_conn_desc: '無法連接至伺服器，請稍後再試。', 
+                err_data_title: '數據讀取失敗',
                 rules_list: [
                     "直播間總鑽石僅計算：「直播禮物」、「限時表演票券」、「挑逗表演」、「震動控制」。",
                     "排行榜鑽石相同者，以先達成者排名在前。",
@@ -564,7 +597,6 @@
                 cta: "查看人气女神活动",
                 current_rank: "当前排名",
                 total_spent: "总消费",
-                error_desc: "读取失败，请确认已登录。",
                 lb_title: "总钻排行榜",
                 rewards_title: "排名奖励",
                 breakdown_gift: "直播礼物",
@@ -572,6 +604,12 @@
                 breakdown_menu: "挑逗表演",
                 breakdown_lovense: "震动控制",
                 rules_title: "活动说明",
+                // Error Messages
+                err_missing_title: '⚠️ 缺少用户信息', 
+                err_missing_desc: '请登入 SWAG 后再使用本页面。',
+                err_conn_title: '连接错误', 
+                err_conn_desc: '无法连接至服务器，请稍后再试。', 
+                err_data_title: '数据读取失败',
                 rules_list: [
                     "直播间总钻石仅计算：“直播礼物”，“限时表演票券”，“挑逗表演”，“震动控制”。",
                     "排行榜钻石相同者，以先达成者排名在前。",
@@ -588,7 +626,6 @@
                 cta: "View Event",
                 current_rank: "Rank",
                 total_spent: "Total",
-                error_desc: "Load failed. Please log in.",
                 lb_title: "Total Diamond Leaderboard",
                 rewards_title: "Rewards",
                 breakdown_gift: "Livestream Gift",
@@ -596,6 +633,12 @@
                 breakdown_menu: "Tease Show",
                 breakdown_lovense: "Vibe Control",
                 rules_title: "Rules",
+                // Error Messages
+                err_missing_title: '⚠️ Missing User ID', 
+                err_missing_desc: 'Please log in to SWAG before using this page.',
+                err_conn_title: 'Connection Error', 
+                err_conn_desc: 'Unable to connect to server. Please try again later.', 
+                err_data_title: 'Data Error',
                 rules_list: [
                     "Total diamonds calculated from: 'Livestream Gift', 'Paid Show', 'Tease Show', 'Vibe Control' only.",
                     "If diamonds are equal, the first to achieve the amount ranks higher.",
@@ -612,7 +655,6 @@
                 cta: "イベントを見る",
                 current_rank: "現在の順位",
                 total_spent: "合計消費",
-                error_desc: "読み込みに失敗しました。",
                 lb_title: "ランキング",
                 rewards_title: "ランキング報酬",
                 breakdown_gift: "ギフト",
@@ -620,6 +662,12 @@
                 breakdown_menu: "セクシーショー",
                 breakdown_lovense: "リモートバイブ",
                 rules_title: "注意事項",
+                // Error Messages
+                err_missing_title: '⚠️ ユーザー情報不足', 
+                err_missing_desc: 'ご利用にはログインが必要です。',
+                err_conn_title: '通信エラー', 
+                err_conn_desc: 'サーバーに接続できません。後ほどお試しください。', 
+                err_data_title: 'データエラー',
                 rules_list: [
                     "対象：『ギフト』、『有料ショー』、『セクシーショー』、『リモートバイブ』のみ。",
                     "同ダイヤ数の場合は、先に達成した方が上位となります。",
@@ -630,7 +678,6 @@
             }
         };
 
-        // Fallback Data if API fails or for initial state
         const MOCK_LEADERBOARD = [
             { rank: 1, user_id: '...', total_diamond_cost: 0 },
             { rank: 2, user_id: '...', total_diamond_cost: 0 },
@@ -645,10 +692,10 @@
         ];
 
         const REWARDS = [100000, 90000, 80000, 70000, 60000, 50000, 40000, 30000, 20000, 10000];
-
         let currentLeaderboard = [...MOCK_LEADERBOARD];
 
         function setLang(lang) {
+            currentLang = lang;
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.remove('active');
                 if (
@@ -660,6 +707,10 @@
                     btn.classList.add('active');
                 }
             });
+
+            if (currentErrorState) {
+                showError(currentErrorState.type, currentErrorState.debugInfo);
+            }
 
             const t = TRANSLATIONS[lang];
             document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -676,7 +727,26 @@
             });
         }
 
-        // Render Leaderboard & Rewards
+        function showError(type, debugInfo = '') {
+            currentErrorState = { type, debugInfo };
+            const t = TRANSLATIONS[currentLang];
+            let title = t.err_data_title;
+            let desc = debugInfo;
+            
+            if (type === 'missing') {
+                title = t.err_missing_title;
+                desc = t.err_missing_desc;
+            } else if (type === 'connection') {
+                title = t.err_conn_title;
+                desc = t.err_conn_desc;
+            }
+
+            const errorEl = document.getElementById('error-msg');
+            errorEl.innerHTML = `<h3>${title}</h3><p>${desc}</p>${debugInfo && type !== 'missing' ? `<div class="error-debug">${debugInfo}</div>` : ''}`;
+            errorEl.classList.remove('hidden');
+            document.getElementById('dashboard-container').classList.add('hidden');
+        }
+
         function renderTables() {
             const lbBody = document.getElementById('leaderboard-body');
             lbBody.innerHTML = '';
@@ -689,7 +759,6 @@
 
                 const div = document.createElement('div');
                 div.className = 'align-row';
-                // Handle missing data (0 diamonds) visually with blur/dim if needed, or just 0
                 const scoreText = item.total_diamond_cost > 0 ? item.total_diamond_cost.toLocaleString() : '-';
                 
                 div.innerHTML = `
@@ -709,55 +778,50 @@
             });
         }
 
-        // Integration Logic: User ID Parsing
+        // --- 修正重點: 與 001 完全一致的 ID 解析邏輯 (含 decode) ---
         function getUserId() {
-            // 1. Query Param (?user_id=)
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('user_id')) return urlParams.get('user_id');
+            let userId = null;
+            const currentUrl = window.location.href;
+            
+            // 使用 001 的 Regex，支援 ?, &, #, / 開頭
+            const regex = /(?:[?&#/]|^)user_id=([^&#]*)/i;
+            
+            const match = currentUrl.match(regex);
+            if (match && match[1]) {
+                userId = match[1];
+            }
 
-            // 2. Hash Param (#user_id= or #/route?user_id=)
-            if (window.location.hash) {
-                // Try parsing entire hash as params first
-                const hashContent = window.location.hash.substring(1); // remove #
-                const hashParams = new URLSearchParams(hashContent);
-                if (hashParams.has('user_id')) return hashParams.get('user_id');
-                
-                // Try finding ? inside hash
-                const splitHash = hashContent.split('?');
-                if (splitHash.length > 1) {
-                    const innerParams = new URLSearchParams(splitHash[1]);
-                    if (innerParams.has('user_id')) return innerParams.get('user_id');
+            // 如果找不到，嘗試解碼網址再找一次 (iframe 常見問題)
+            if (!userId) {
+                try {
+                    const decoded = decodeURIComponent(currentUrl);
+                    const m2 = decoded.match(regex);
+                    if (m2 && m2[1]) userId = m2[1];
+                } catch(e) {
+                    console.error("Decode URL failed", e);
                 }
             }
 
-            // 3. Regex Fallback (Brute force search in whole URL string for typical MongoID pattern)
-            // Matches 24 hex characters preceded by user_id=
-            const regex = /[?&#]user_id=([a-fA-F0-9]{24})/;
-            const match = window.location.href.match(regex);
-            if (match && match[1]) return match[1];
-
-            return null;
+            return userId;
         }
 
         async function fetchUserData() {
             const userId = getUserId();
             const errorEl = document.getElementById('error-msg');
             const loader = document.getElementById('loading-dash');
+            const dashContainer = document.getElementById('dashboard-container');
             
-            // Reset state
             errorEl.classList.add('hidden');
+            dashContainer.classList.remove('hidden');
 
-            // If user_id is empty, show error message
             if (!userId) {
-                errorEl.classList.remove('hidden');
+                showError('missing');
                 renderTables();
                 return;
             }
 
-            // If user_id exists, show loading on dashboard
             loader.classList.remove('hidden');
 
-            // Default dashboard values
             const resetDashboard = () => {
                 document.getElementById('disp-rank').textContent = '--';
                 document.getElementById('disp-total').textContent = '0';
@@ -767,28 +831,27 @@
             };
 
             try {
-                const fetchUrl = `${API_BASE_URL}/?user_id=${userId}`;
+                // --- 修正重點: 移除 URL 斜線，正確拼接參數 ---
+                const fetchUrl = `${API_BASE_URL}?user_id=${encodeURIComponent(userId)}`;
 
-                // Fetch Options: credentials: 'omit'
+                // --- 修正重點: Fetch Options 與 001 一致 ---
                 const response = await fetch(fetchUrl, {
                     method: 'GET',
-                    credentials: 'omit', 
-                    headers: { 'Content-Type': 'application/json' }
+                    redirect: 'follow', // 處理 Redirect
+                    mode: 'cors',       // 明確宣告 CORS
+                    credentials: 'omit' // 避免送出 cookie
                 });
 
-                // If 404 (User not found/No stats), treat as valid user with 0 stats.
-                // Do NOT treat as error.
                 if (response.status === 404) {
                     resetDashboard();
-                    renderTables(); // Ensure table renders
+                    renderTables(); 
                     return;
                 }
 
-                if (!response.ok) throw new Error(`API Error: ${response.status}`);
+                if (!response.ok) throw new Error(`API Status: ${response.status}`);
 
                 const data = await response.json();
 
-                // 1. Update User Stats
                 if (data.user_stats) {
                     document.getElementById('disp-rank').textContent = data.user_stats.rank;
                     document.getElementById('disp-total').textContent = (data.user_stats.total_diamond_cost || 0).toLocaleString();
@@ -804,16 +867,14 @@
                     resetDashboard();
                 }
 
-                // 2. Update Leaderboard
                 if (data.leaderboard_top_10 && Array.isArray(data.leaderboard_top_10) && data.leaderboard_top_10.length > 0) {
                     currentLeaderboard = data.leaderboard_top_10;
-                    renderTables(); // Re-render with real data
+                    renderTables();
                 }
 
             } catch (err) {
                 console.error("Fetch error:", err);
-                // Even on error, if userId exists, we do NOT show error message per requirements.
-                // Just reset dashboard.
+                showError('connection', err.toString());
                 resetDashboard();
                 renderTables(); 
             } finally {
@@ -823,7 +884,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             setLang('tc');
-            renderTables(); // Initial render with mock data
+            renderTables();
             fetchUserData();
         });
     </script>
