@@ -826,6 +826,10 @@
             renderTables(); // Initial render with mock data
             fetchUserData();
         });
+
+        // Listen for URL changes (fixes Iframe issue where hash might appear late)
+        window.addEventListener('hashchange', fetchUserData);
+        window.addEventListener('popstate', fetchUserData);
     </script>
 </body>
 </html>
