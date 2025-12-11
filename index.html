@@ -116,7 +116,7 @@
             font-size: clamp(2rem, 6vw, 3.5rem);
             font-weight: 900;
             margin-bottom: 15px;
-            font-style: italic;
+            font-style: normal; /* Changed from italic */
             text-transform: uppercase;
             color: #fff;
             text-shadow: 0 0 30px rgba(255,255,255,0.3);
@@ -439,7 +439,7 @@
         </div>
 
         <div id="error-msg" class="error-msg hidden">
-            <span data-i18n="error_desc">讀取失敗</span> <span id="debug-text" style="font-size:0.8em; opacity: 0.8;"></span>
+            <span data-i18n="error_desc">讀取失敗</span>
         </div>
 
         <!-- Dashboard -->
@@ -742,11 +742,20 @@
         async function fetchUserData() {
             const userId = getUserId();
             const errorEl = document.getElementById('error-msg');
-            const debugText = document.getElementById('debug-text');
             const loader = document.getElementById('loading-dash');
             
-            // If user ID exists, show loading on dashboard
-            if (userId) loader.classList.remove('hidden');
+            // Reset state
+            errorEl.classList.add('hidden');
+
+            // If user_id is empty, show error message
+            if (!userId) {
+                errorEl.classList.remove('hidden');
+                renderTables();
+                return;
+            }
+
+            // If user_id exists, show loading on dashboard
+            loader.classList.remove('hidden');
 
             // Default dashboard values
             const resetDashboard = () => {
@@ -758,26 +767,7 @@
             };
 
             try {
-                // Construct URL
-                // If userId is null, we can still fetch leaderboard if endpoint supports it without param,
-                // but requirements say "GET /?user_id=xxx". 
-                // We will attempt to fetch with a dummy or empty if strict, but let's assume we need an ID for user stats.
-                // However, likely we want to see leaderboard even if not logged in. 
-                // NOTE: The prompt implies the API returns specific data structure. 
-                
-                let fetchUrl = API_BASE_URL;
-                if (userId) {
-                    fetchUrl += `/?user_id=${userId}`;
-                } else {
-                    // Try to fetch a known existing ID or just root to get leaderboard if API allows?
-                    // Based on prompt "When API receives GET /?user_id=xxx", it implies logic runs then.
-                    // We will skip user fetch if no ID, but we still need leaderboard.
-                    // For this specific integration, let's assume we only call if we have an ID, 
-                    // OR we try to call with a dummy to get leaderboard if the API supports partial response.
-                    // If not, we just render mock leaderboard.
-                    renderTables(); // Render defaults
-                    return; 
-                }
+                const fetchUrl = `${API_BASE_URL}/?user_id=${userId}`;
 
                 // Fetch Options: credentials: 'omit'
                 const response = await fetch(fetchUrl, {
@@ -785,6 +775,14 @@
                     credentials: 'omit', 
                     headers: { 'Content-Type': 'application/json' }
                 });
+
+                // If 404 (User not found/No stats), treat as valid user with 0 stats.
+                // Do NOT treat as error.
+                if (response.status === 404) {
+                    resetDashboard();
+                    renderTables(); // Ensure table renders
+                    return;
+                }
 
                 if (!response.ok) throw new Error(`API Error: ${response.status}`);
 
@@ -814,12 +812,10 @@
 
             } catch (err) {
                 console.error("Fetch error:", err);
-                if (userId) {
-                    errorEl.classList.remove('hidden');
-                    debugText.textContent = `(ID: ${userId})`;
-                }
+                // Even on error, if userId exists, we do NOT show error message per requirements.
+                // Just reset dashboard.
                 resetDashboard();
-                renderTables(); // Ensure table renders even on error
+                renderTables(); 
             } finally {
                 loader.classList.add('hidden');
             }
