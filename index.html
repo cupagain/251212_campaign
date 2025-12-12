@@ -552,9 +552,7 @@
     </div>
 
     <script>
-        // Integration Logic: API URL
-        // 修正：移除結尾斜線，確保與 Query String 拼接正確
-        const API_BASE_URL = "https://campaign-api-905468082258.asia-east1.run.app"; 
+        const API_BASE_URL = "https://campaign-api-v2-905468082258.asia-east1.run.app"; 
 
         let currentLang = 'tc';
         let currentErrorState = null; 
@@ -575,7 +573,6 @@
                 breakdown_menu: "挑逗表演",
                 breakdown_lovense: "震動控制",
                 rules_title: "活動說明",
-                // Error Messages
                 err_missing_title: '⚠️ 缺少用戶資訊', 
                 err_missing_desc: '請登入 SWAG 後再使用本頁面。',
                 err_conn_title: '連線錯誤', 
@@ -604,7 +601,6 @@
                 breakdown_menu: "挑逗表演",
                 breakdown_lovense: "震动控制",
                 rules_title: "活动说明",
-                // Error Messages
                 err_missing_title: '⚠️ 缺少用户信息', 
                 err_missing_desc: '请登入 SWAG 后再使用本页面。',
                 err_conn_title: '连接错误', 
@@ -633,7 +629,6 @@
                 breakdown_menu: "Tease Show",
                 breakdown_lovense: "Vibe Control",
                 rules_title: "Rules",
-                // Error Messages
                 err_missing_title: '⚠️ Missing User ID', 
                 err_missing_desc: 'Please log in to SWAG before using this page.',
                 err_conn_title: 'Connection Error', 
@@ -662,7 +657,6 @@
                 breakdown_menu: "セクシーショー",
                 breakdown_lovense: "リモートバイブ",
                 rules_title: "注意事項",
-                // Error Messages
                 err_missing_title: '⚠️ ユーザー情報不足', 
                 err_missing_desc: 'ご利用にはログインが必要です。',
                 err_conn_title: '通信エラー', 
@@ -778,12 +772,10 @@
             });
         }
 
-        // --- 修正重點: 與 001 完全一致的 ID 解析邏輯 (含 decode) ---
         function getUserId() {
             let userId = null;
             const currentUrl = window.location.href;
             
-            // 使用 001 的 Regex，支援 ?, &, #, / 開頭
             const regex = /(?:[?&#/]|^)user_id=([^&#]*)/i;
             
             const match = currentUrl.match(regex);
@@ -791,7 +783,6 @@
                 userId = match[1];
             }
 
-            // 如果找不到，嘗試解碼網址再找一次 (iframe 常見問題)
             if (!userId) {
                 try {
                     const decoded = decodeURIComponent(currentUrl);
@@ -831,28 +822,23 @@
             };
 
             try {
-                // --- 修正重點: 移除 URL 斜線，正確拼接參數 ---
                 const fetchUrl = `${API_BASE_URL}?user_id=${encodeURIComponent(userId)}`;
 
-                // --- 修正重點: Fetch Options 與 001 一致 ---
                 const response = await fetch(fetchUrl, {
                     method: 'GET',
-                    redirect: 'follow', // 處理 Redirect
-                    mode: 'cors',       // 明確宣告 CORS
-                    credentials: 'omit' // 避免送出 cookie
+                    redirect: 'follow',
+                    mode: 'cors',
+                    credentials: 'omit'
                 });
 
-                if (response.status === 404) {
-                    resetDashboard();
-                    renderTables(); 
-                    return;
-                }
-
+                // 新邏輯：不再檢查 404，只檢查是否為 200 OK 以外的錯誤 (例如 400 Bad Request 或 500)
                 if (!response.ok) throw new Error(`API Status: ${response.status}`);
 
                 const data = await response.json();
 
+                // 1. 處理用戶數據
                 if (data.user_stats) {
+                    // 有數據，填入
                     document.getElementById('disp-rank').textContent = data.user_stats.rank;
                     document.getElementById('disp-total').textContent = (data.user_stats.total_diamond_cost || 0).toLocaleString();
                     
@@ -864,9 +850,11 @@
                         document.getElementById('disp-lovense').textContent = (bd.lovense_diamonds || 0).toLocaleString();
                     }
                 } else {
+                    // 查無此人 (user_stats 為 null)，重置看板為初始狀態
                     resetDashboard();
                 }
 
+                // 2. 處理排行榜 (無論是否有用戶數據都渲染)
                 if (data.leaderboard_top_10 && Array.isArray(data.leaderboard_top_10) && data.leaderboard_top_10.length > 0) {
                     currentLeaderboard = data.leaderboard_top_10;
                     renderTables();
